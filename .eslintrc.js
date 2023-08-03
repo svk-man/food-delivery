@@ -87,7 +87,6 @@ module.exports = {
 
         // this rule, if on, would require explicit return type on the `render` function
         "@typescript-eslint/explicit-function-return-type": "off",
-
         // in plain CommonJS modules, you can't use `import foo = require('foo')` to pass this rule, so it has to be disabled
         "@typescript-eslint/no-var-requires": "off",
 
@@ -97,5 +96,35 @@ module.exports = {
 
         // allow debugger during development only
         "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+
+        "import/prefer-default-export": "off",
+        "import/no-extraneous-dependencies": "off",
+        "max-lines-per-function": ["error", 40],
+        "class-methods-use-this": "off",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/lines-between-class-members": "off",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/array-type": [
+            "error",
+            {
+                "default": "array"
+            }
+        ],
+        "@typescript-eslint/explicit-member-accessibility": [
+            "error",
+            {
+                "accessibility": "explicit",
+                "overrides": {
+                    "accessors": "explicit",
+                    "constructors": "off",
+                    "methods": "explicit",
+                    "properties": "explicit",
+                    "parameterProperties": "explicit"
+                }
+            }
+        ],
     },
 };
