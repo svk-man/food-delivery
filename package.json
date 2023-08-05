@@ -9,7 +9,7 @@
         "build": "quasar build",
         "build:dev": "quasar build --debug",
         "test": "jest",
-        "prepare": "husky install && npx husky add .husky/pre-commit 'npx lint-staged --relative'"
+        "prepare": "husky install && npx husky add .husky/pre-commit \"npx lint-staged --relative\""
     },
     "dependencies": {
         "@quasar/extras": "^1.16.4",
