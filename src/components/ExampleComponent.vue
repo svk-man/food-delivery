@@ -14,8 +14,10 @@
 import { defineComponent, PropType, computed, ref, toRef, Ref } from 'vue';
 import { Todo, Meta } from './models';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function useClickCount() {
     const clickCount = ref(0);
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     function increment() {
         clickCount.value += 1;
         return clickCount.value;
@@ -24,6 +26,7 @@ function useClickCount() {
     return { clickCount, increment };
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function useDisplayTodo(todos: Ref<Todo[]>) {
     const todoCount = computed(() => todos.value.length);
     return { todoCount };

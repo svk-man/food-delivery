@@ -86,6 +86,7 @@ export default defineComponent({
         return {
             essentialLinks: linksList,
             leftDrawerOpen,
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             toggleLeftDrawer() {
                 leftDrawerOpen.value = !leftDrawerOpen.value;
             },
