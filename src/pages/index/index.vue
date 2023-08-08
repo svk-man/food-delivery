@@ -1,20 +1,8 @@
 <template>
-    <q-layout>
-        <q-header>
-            <h2>Index Page</h2>
-            <div>
-                <router-link to="/register">Registration</router-link>
-            </div>
-            <div>
-                <router-link to="/signin">Authorization</router-link>
-            </div>
-        </q-header>
-        <q-page-container>
-            <q-page>
-                <product-list />
-            </q-page>
-        </q-page-container>
-    </q-layout>
+    <q-page padding>
+        <h3>Main Page</h3>
+        <product-list />
+    </q-page>
 </template>
 
 <script lang="ts" setup>
