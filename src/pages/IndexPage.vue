@@ -10,7 +10,6 @@ import { Todo, Meta } from 'components/models';
 import ExampleComponent from 'components/ExampleComponent.vue';
 import { defineComponent, ref } from 'vue';
 import Products from 'src/components/Products.vue';
-// import 'dotenv/config';
 
 export default defineComponent({
     name: 'IndexPage',
