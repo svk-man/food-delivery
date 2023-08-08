@@ -1,59 +1,59 @@
-/* eslint-disable no-useless-catch */
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import axios, { AxiosResponse } from 'axios';
-import 'dotenv/config';
 
-class MyService {
-    private token: string = '';
+export interface Product {
+    results: [];
+    id: string;
+    version: string;
+    versionModifiedAt: string;
+    lastMessageSequenceNumber: number;
+    createdAt: string;
+    lastModifiedAt: string;
+    lastModifiedBy: object;
+    createdBy: object;
+    productType: object;
+    masterData: {
+        current: {
+            name: {
+                ru: string;
+            };
+        };
+    };
+    key: string;
+    priceMode: string;
+    lastVariantId: number;
+}
 
-    async getToken(key: string, id: string, secret: string, scope: string): Promise<void> {
-        try {
-            const response: AxiosResponse = await axios({
-                url: 'https://auth.us-central1.gcp.commercetools.com/oauth/token',
-                method: 'post',
-                params: {
-                    grant_type: 'client_credentials',
-                    scope: `${scope}`,
-                },
-                auth: {
-                    username: id,
-                    password: secret,
-                },
-            });
+export async function fetchAccessToken(id: string, secret: string, scope: string): Promise<string | null> {
+    try {
+        const response: AxiosResponse<{ access_token: string }> = await axios({
+            url: 'https://auth.us-central1.gcp.commercetools.com/oauth/token',
+            method: 'post',
+            params: {
+                grant_type: 'client_credentials',
+                scope: `${scope}`,
+            },
+            auth: {
+                username: id,
+                password: secret,
+            },
+        });
 
-            this.token = response.data.access_token;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async setToken(): Promise<void> {
-        const key: string | undefined = process.env.SPAPROJECTKEY;
-        const id: string | undefined = process.env.SPA_CLIENT_ID;
-        const secret: string | undefined = process.env.SPA_CLIENT_SECRET;
-        const scope: string | undefined = process.env.SPA_SCOPE;
-
-        if (key && id && secret && scope) {
-            await this.getToken(key, id, secret, scope);
-        } else {
-            throw new Error('Have not env variables, check accessability of env');
-        }
-    }
-
-    async getProducts(spaProjectKey: string): Promise<AxiosResponse> {
-        try {
-            const products: AxiosResponse = await axios({
-                url: `https://api.us-central1.gcp.commercetools.com/${spaProjectKey}/products`,
-                method: 'get',
-                headers: { Authorization: `Bearer ${this.token}` },
-            });
-
-            return products;
-        } catch (error) {
-            throw error;
-        }
+        return response.data.access_token;
+    } catch (error) {
+        return null;
     }
 }
 
-const service = new MyService();
-service.setToken();
+export async function fetchProducts(key: string, token: string): Promise<Product[] | null> {
+    try {
+        const response: AxiosResponse<{ results: Product[] }> = await axios({
+            url: `https://api.us-central1.gcp.commercetools.com/${key}/products`,
+            method: 'get',
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        return response.data.results;
+    } catch (error) {
+        return null;
+    }
+}
