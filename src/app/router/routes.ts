@@ -6,6 +6,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../../pages/index'),
         // children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
     },
+    {
+        path: '/register',
+        component: () => import('../../pages/registration'),
+    },
+    {
+        path: '/signin',
+        component: () => import('../../pages/authorization'),
+    },
 
     // Always leave this as last one,
     // but you can also remove it
