@@ -1,9 +1,16 @@
 <template>
     <q-layout>
+        <q-header>
+            <h2>Authorization Page</h2>
+            <div>
+                <router-link to="/">Main</router-link>
+            </div>
+            <div>
+                <router-link to="/register">Registration</router-link>
+            </div>
+        </q-header>
         <q-page-container>
-            <q-page>
-                <div>Authorization</div>
-            </q-page>
+            <q-page> </q-page>
         </q-page-container>
     </q-layout>
 </template>
