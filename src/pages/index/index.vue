@@ -5,6 +5,9 @@
             <div>
                 <router-link to="/register">Registration</router-link>
             </div>
+            <div>
+                <router-link to="/signin">Authorization</router-link>
+            </div>
         </q-header>
         <q-page-container>
             <q-page>
