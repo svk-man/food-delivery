@@ -1,11 +1,13 @@
 <template>
     <div>Index Page</div>
+    <product-list />
 </template>
 
-<script>
+<script lang="ts" setup>
 import { defineComponent } from 'vue';
+import ProductList from 'src/widgets/product-list';
 
-export default defineComponent({
+defineComponent({
     name: 'IndexPage',
 });
 </script>
