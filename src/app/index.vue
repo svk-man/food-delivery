@@ -1,14 +1,8 @@
 <template>
     <q-layout>
         <q-header>
-            <div>
-                <router-link to="/">Main</router-link>
-            </div>
-            <div>
-                <router-link to="/register">Registration</router-link>
-            </div>
-            <div>
-                <router-link to="/signin">Authorization</router-link>
+            <div v-for="link in linksToPages" :key="link.to">
+                <router-link :to="link.to">{{ link.label }}</router-link>
             </div>
         </q-header>
         <q-page-container>
@@ -20,10 +14,16 @@
     </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { ref, defineComponent } from 'vue';
 
-export default defineComponent({
+const linksToPages = ref([
+    { to: '/', label: 'Main' },
+    { to: '/register', label: 'Registration Page' },
+    { to: '/signin', label: 'Authorization Page' },
+]);
+
+defineComponent({
     name: 'App',
 });
 </script>
