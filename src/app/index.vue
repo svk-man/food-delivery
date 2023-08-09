@@ -1,15 +1,21 @@
 <template>
     <q-layout>
-        <q-header>
-            <div v-for="link in linksToPages" :key="link.to">
-                <router-link :to="link.to">{{ link.label }}</router-link>
+        <q-header class="bg-secondary">
+            <div class="container q-py-md">
+                <div class="bg-primary">
+                    <div v-for="link in linksToPages" :key="link.to">
+                        <router-link :to="link.to">{{ link.label }}</router-link>
+                    </div>
+                </div>
             </div>
         </q-header>
-        <q-page-container>
-            <RouterView />
+        <q-page-container class="bg-secondary">
+            <div class="container q-py-md">
+                <RouterView />
+            </div>
         </q-page-container>
-        <q-footer>
-            <div>Footer</div>
+        <q-footer class="bg-secondary">
+            <div class="container q-pt-md">Footer</div>
         </q-footer>
     </q-layout>
 </template>
@@ -27,3 +33,10 @@ defineComponent({
     name: 'App',
 });
 </script>
+
+<style lang="scss" scoped>
+.container {
+    max-width: 1576px;
+    margin: 0 auto;
+}
+</style>
