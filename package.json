@@ -52,7 +52,9 @@
     },
     "lint-staged": {
         "*.{js,ts,vue,scss,html,css}": [
-            "prettier --write --config .prettierrc",
+            "prettier --write --config .prettierrc"
+        ],
+        "*.{js,ts,vue}": [
             "eslint --fix"
         ]
     }
