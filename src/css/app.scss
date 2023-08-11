@@ -31,3 +31,7 @@
     font-family: Inter;
     font-weight: 700;
 }
+// Border radius of q-input elements
+.q-field--outlined .q-field__control {
+    border-radius: 12px;
+}
