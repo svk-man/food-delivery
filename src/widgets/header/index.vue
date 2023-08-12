@@ -6,7 +6,7 @@
                     <q-img src="/logo.png" :style="{ width: '80px' }" />
                 </q-toolbar-title>
                 <div class="header__buttons font-inter-500">
-                    <div>
+                    <div class="gt-sm">
                         <q-btn to="/" label="Главная" class="header__buttons-item" rounded text-color="black" flat />
                     </div>
                     <div class="header__buttons_auth gt-sm">
