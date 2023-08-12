@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Россия", "postalCodePattern": "^(\\d{6})$"
+    },
+    {
+        "name": "Казахстан", "postalCodePattern": "^(\\d{6})$"
+    },
+    {
+        "name": "USA", "postalCodePattern": "^\\d{5}(-\\d{4})?$"
+    },
+    {
+        "name": "Canada", "postalCodePattern":"^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ]) ?(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$"
+    }
+]
