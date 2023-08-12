@@ -44,7 +44,14 @@
     </q-header>
     <q-drawer v-model="leftDrawerOpen" bordered>
         <div class="sidebar">
-            <q-btn v-for="(link, index) in linksToPages" :key="index" :to="link.to">{{ link.label }}</q-btn>
+            <q-btn
+                v-for="(link, index) in linksToPages"
+                :key="index"
+                :to="link.to"
+                class="text-capitalize font-inter-500"
+            >
+                {{ link.label }}
+            </q-btn>
         </div>
     </q-drawer>
 </template>
@@ -53,9 +60,9 @@
 import { defineComponent, ref } from 'vue';
 
 const linksToPages = ref([
-    { to: '/', label: 'Main' },
-    { to: '/register', label: 'Registration Page' },
-    { to: '/signin', label: 'Authorization Page' },
+    { to: '/', label: 'Главная' },
+    { to: '/register', label: 'Регистрация' },
+    { to: '/signin', label: 'Войти' },
 ]);
 
 const leftDrawerOpen = ref(false);
