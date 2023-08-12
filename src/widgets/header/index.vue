@@ -81,32 +81,37 @@ defineComponent({
     margin: 0 auto;
     border-radius: 12px;
     display: flex;
+
+    &__content {
+        display: flex;
+        flex-basis: 100%;
+    }
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        &-item {
+            text-transform: capitalize;
+            &_auth {
+                border-radius: 12px;
+                font-weight: 500;
+                letter-spacing: 0.2px;
+            }
+        }
+        &_auth {
+            display: flex;
+            gap: 12px;
+            height: fit-content;
+        }
+    }
 }
-.header__content {
-    display: flex;
-    flex-basis: 100%;
-}
-.header__buttons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.header__buttons_auth {
-    display: flex;
-    gap: 12px;
-    height: fit-content;
-}
-.header__buttons-item_auth {
-    border-radius: 12px;
-    font-weight: 500;
-    letter-spacing: 0.2px;
-}
-.header__buttons-item {
-    text-transform: capitalize;
-}
+
 .sidebar {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding: 24px 12px;
 }
 </style>
