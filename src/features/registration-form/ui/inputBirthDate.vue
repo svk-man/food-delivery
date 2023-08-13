@@ -7,6 +7,7 @@
         color="accent"
         reactive-rules
         v-model="date"
+        placeholder="гггг/мм/дд"
         @update:model-value="updateDate"
         mask="date"
         :rules="[isValidDate, (val, rules) => rules.date(val) || 'Некорректная дата']"
