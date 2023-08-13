@@ -8,7 +8,7 @@
         reactive-rules
         v-model="userStreet"
         @update:model-value="updateCity"
-        :rules="[(val: string) => !!val.length || 'Обязательное поле']"
+        :rules="[(val) => (val && val.length) || 'Обязательное поле']"
         class="signup-form__input text-body1"
     />
 </template>
