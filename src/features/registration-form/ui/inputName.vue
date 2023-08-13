@@ -6,7 +6,7 @@
             clearable
             stack-label
             color="accent"
-            lazy-rules="ondemand"
+            reactive-rules
             v-model="userFirstName"
             @update:model-value="updateFirstName"
             :rules="[isValidName]"
@@ -18,7 +18,7 @@
             clearable
             stack-label
             color="accent"
-            lazy-rules="ondemand"
+            reactive-rules
             v-model="userLastName"
             @update:model-value="updateLastName"
             :rules="[isValidName]"

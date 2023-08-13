@@ -5,10 +5,13 @@
         clearable
         stack-label
         color="accent"
-        lazy-rules="ondemand"
+        reactive-rules
         v-model="userEmail"
         @update:model-value="updateEmail"
-        :rules="[(val, rules) => rules.email(val) || 'Некорректный Email']"
+        :rules="[
+            (val) => (val && val.length) || 'Обязательное поле',
+            (val, rules) => rules.email(val) || 'Некорректный Email',
+        ]"
         class="signup-form__input text-body1"
     />
 </template>
