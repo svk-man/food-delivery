@@ -1,5 +1,8 @@
 export function isValidName(inputString: string): boolean | string {
     const pattern = /[^a-zA-Zа-яА-ЯёЁ]/;
 
-    return !inputString.length ? 'Обязательное поле' : pattern.test(inputString) ? 'Некорректное значение' : true;
+    if (!inputString || !inputString.length) return 'Обязательное поле';
+    if (pattern.test(inputString)) return 'Некорректное значение';
+
+    return true;
 }
