@@ -1,11 +1,12 @@
 <template>
     <q-page padding>
-        <h3>Registration Page</h3>
+        <registration-form />
     </q-page>
 </template>
 
 <script lang="ts" setup>
 import { defineComponent } from 'vue';
+import RegistrationForm from 'src/features/registration-form';
 
 defineComponent({
     name: 'RegistrationPage',
