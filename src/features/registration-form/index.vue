@@ -100,6 +100,7 @@ defineComponent({
         margin-top: 5px;
     }
     &__btn {
+        margin-top: 25px;
         font-size: 16px;
         line-height: 24px;
         font-weight: 500;

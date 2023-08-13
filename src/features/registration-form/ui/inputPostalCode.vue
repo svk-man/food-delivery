@@ -7,9 +7,8 @@
         color="accent"
         reactive-rules
         v-model="userPostalCode"
-        class="signup-form__input text-body1"
+        class="signup-form__input postal-code-input text-body1"
     />
-    <!-- @update:model-value="updateEmail" -->
 </template>
 
 <script setup lang="ts">
@@ -22,4 +21,8 @@ defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.postal-code-input {
+    margin-top: 20px;
+}
+</style>
