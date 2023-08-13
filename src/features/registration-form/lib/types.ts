@@ -10,3 +10,13 @@ export interface PasswordValidator {
     isValidDigit: boolean;
     isValid: boolean;
 }
+
+export interface UserData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    dateOfBirth: string;
+    city: string;
+    street: string;
+    password: string;
+}

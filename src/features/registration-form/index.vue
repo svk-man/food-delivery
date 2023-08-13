@@ -1,5 +1,5 @@
 <template>
-    <q-form @submit.prevent="console.log('Submit')" class="signup-form">
+    <q-form @submit.prevent="submit" class="signup-form">
         <input-name @update:first-name="handleFirstNameUpdate" @update:last-name="handleLastNameUpdate" />
         <input-email @update:email="handleEmailUpdate" />
         <input-birth-date @update:date="handleDateUpdate" />
@@ -30,47 +30,53 @@ import { Ref, defineComponent, ref, watch } from 'vue';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
 import InputPassword from 'src/shared/ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
-import { Country } from './lib/types';
+import { Country, UserData } from './lib/types';
 import InputName from './ui/inputName.vue';
 import InputBirthDate from './ui/inputBirthDate.vue';
 import SelectCountry from './ui/inputCountry.vue';
 import InputPostalCode from './ui/inputPostalCode.vue';
 import InputCity from './ui/inputCity.vue';
 import InputStreet from './ui/inputStreet.vue';
+import handleUserRegistration from './model/handleUserRegistration';
 
-let userFirstName = '';
-let userLastName = '';
-let userEmail = '';
-let userDateOfBirth = '';
-let userCity = '';
-let userStreet = '';
-let userPassword = '';
+const userData: UserData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    dateOfBirth: '',
+    city: '',
+    street: '',
+    password: '',
+};
 const selectedCountry: Ref<Country> = ref({ name: '', postalCodePattern: '' });
 const postalCodePattern = ref('');
 
 const handleFirstNameUpdate = (firstName: string): void => {
-    userFirstName = firstName;
+    userData.firstName = firstName;
 };
 const handleLastNameUpdate = (lastName: string): void => {
-    userLastName = lastName;
+    userData.lastName = lastName;
 };
 const handleEmailUpdate = (email: string): void => {
-    userEmail = email;
+    userData.email = email;
 };
 const handleDateUpdate = (date: string): void => {
-    userDateOfBirth = date;
+    userData.dateOfBirth = date;
 };
 const handleCountryUpdate = (country: Country): void => {
     selectedCountry.value = country;
 };
 const handleCityUpdate = (city: string): void => {
-    userCity = city;
+    userData.city = city;
 };
 const handleStreetUpdate = (street: string): void => {
-    userStreet = street;
+    userData.street = street;
 };
 const handlePasswordUpdate = (password: string): void => {
-    userPassword = password;
+    userData.password = password;
+};
+const submit = (): void => {
+    handleUserRegistration(userData);
 };
 
 watch(selectedCountry, () => {
