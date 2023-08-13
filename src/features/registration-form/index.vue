@@ -27,16 +27,16 @@
 
 <script setup lang="ts">
 import { Ref, defineComponent, ref, watch } from 'vue';
+import InputEmail from 'src/shared/ui/inputEmail.vue';
+import InputPassword from 'src/shared/ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
 import { Country } from './lib/types';
 import InputName from './ui/inputName.vue';
-import InputEmail from './ui/inputEmail.vue';
 import InputBirthDate from './ui/inputBirthDate.vue';
 import SelectCountry from './ui/inputCountry.vue';
 import InputPostalCode from './ui/inputPostalCode.vue';
 import InputCity from './ui/inputCity.vue';
 import InputStreet from './ui/inputStreet.vue';
-import InputPassword from './ui/inputPassword.vue';
 
 let userFirstName = '';
 let userLastName = '';

@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import { ref, defineComponent, reactive, watch } from 'vue';
-import { validatePassword } from '../lib/validatePassword';
+import { validatePassword } from '../utils/validatePassword';
 
 const userPassword = ref('');
 
