@@ -52,5 +52,3 @@ defineComponent({
     name: 'SelectCountry',
 });
 </script>
-
-<style lang="scss" scoped></style>
