@@ -43,8 +43,10 @@ const setSelectedCountry = (val: string): void => {
 };
 const filterSelect = (val: string, update: (cb: () => void) => void): void => {
     update(() => {
-        const needle = val.toLocaleLowerCase();
-        options.value = countryData.filter((item) => item.name.toLocaleLowerCase().indexOf(needle) > -1);
+        // Введенное пользователем значение в нижнем регистре
+        const searchValue = val.toLowerCase();
+        // Фильтруем список селекта для отображения стран, имя которых содержит введенное значение
+        options.value = countryData.filter((country) => country.name.toLowerCase().includes(searchValue));
     });
 };
 
