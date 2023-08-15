@@ -6,9 +6,9 @@
         "name": "Казахстан", "postalCodePattern": "^(\\d{6})$"
     },
     {
-        "name": "USA", "postalCodePattern": "^\\d{5}(-\\d{4})?$"
+        "name": "США", "postalCodePattern": "^\\d{5}(-\\d{4})?$"
     },
     {
-        "name": "Canada", "postalCodePattern":"^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ]) ?(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$"
+        "name": "Канада", "postalCodePattern":"^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ]) ?(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$"
     }
 ]
