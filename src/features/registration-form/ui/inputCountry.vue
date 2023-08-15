@@ -12,7 +12,7 @@
         input-debounce="0"
         :options="options"
         option-label="name"
-        @input-value="setModel"
+        @input-value="setSelectedCountry"
         @filter="filterSelect"
         class="signup-form__input text-body1"
     >
@@ -37,7 +37,7 @@ const emit = defineEmits(['update:country']);
 const updateCountry = (value: Country): void => {
     emit('update:country', value);
 };
-const setModel = (val: string): void => {
+const setSelectedCountry = (val: string): void => {
     const selectedCountryObject = options.value.find((item) => item.name === val);
     if (selectedCountryObject) selectedCountry.value = selectedCountryObject;
 };
