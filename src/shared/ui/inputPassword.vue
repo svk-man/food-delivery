@@ -1,49 +1,54 @@
 <template>
-    <q-input
-        label="Пароль"
-        type="password"
-        outlined
-        clearable
-        stack-label
-        color="accent"
-        reactive-rules
-        v-model="userPassword"
-        :rules="[
-            (val) => (val && val.length) || 'Обязательное поле',
-            (val) => /[a-zA-Z]/.test(val) || 'Пароль должен содержать только латинские буквы',
-            () => passwordInfo.isValid || 'Пароль не соответствует критериям',
-        ]"
-        class="signup-form__input text-body1"
-    />
-    <div v-if="!passwordInfo.isValid" class="signup-form__password-criteria q-pa-sm">
-        <div class="text-subtitle2 q-mb-sm">Требования к паролю:</div>
-        <div>
-            <q-icon
-                :name="passwordInfo.isValidLength ? 'check_circle' : 'cancel'"
-                :color="passwordInfo.isValidLength ? 'positive' : 'negative'"
-            />
-            Должен содержать минимум 8 символов
-        </div>
-        <div>
-            <q-icon
-                :name="passwordInfo.isValidCapital ? 'check_circle' : 'cancel'"
-                :color="passwordInfo.isValidCapital ? 'positive' : 'negative'"
-            />
-            Должен содержать минимум 1 латинскую заглавную букву
-        </div>
-        <div>
-            <q-icon
-                :name="passwordInfo.isValidLowercase ? 'check_circle' : 'cancel'"
-                :color="passwordInfo.isValidLowercase ? 'positive' : 'negative'"
-            />
-            Должен содержать минимум 1 латинскую строчную букву
-        </div>
-        <div>
-            <q-icon
-                :name="passwordInfo.isValidDigit ? 'check_circle' : 'cancel'"
-                :color="passwordInfo.isValidDigit ? 'positive' : 'negative'"
-            />
-            Должен содержать минимум 1 цифру
+    <div class="password-container">
+        <q-input
+            label="Пароль"
+            type="password"
+            outlined
+            clearable
+            stack-label
+            color="accent"
+            reactive-rules
+            v-model="userPassword"
+            :rules="[
+                (val) => (val && val.length) || 'Обязательное поле',
+                (val) => {
+                    if (/[^\u0000-\u007F]/.test(val)) return 'Пароль должен содержать только латинские буквы';
+                    if (val.includes(' ')) return 'Не может содержать пробел';
+                },
+                () => passwordInfo.isValid || 'Пароль не соответствует критериям',
+            ]"
+            class="signup-form__input text-body1"
+        />
+        <div v-if="!passwordInfo.isValid" class="signup-form__password-criteria q-pa-sm q-mt-xs">
+            <div class="text-subtitle2 q-mb-sm">Требования к паролю:</div>
+            <div>
+                <q-icon
+                    :name="passwordInfo.isValidLength ? 'check_circle' : 'cancel'"
+                    :color="passwordInfo.isValidLength ? 'positive' : 'negative'"
+                />
+                Должен содержать минимум 8 символов
+            </div>
+            <div>
+                <q-icon
+                    :name="passwordInfo.isValidCapital ? 'check_circle' : 'cancel'"
+                    :color="passwordInfo.isValidCapital ? 'positive' : 'negative'"
+                />
+                Должен содержать минимум 1 латинскую заглавную букву
+            </div>
+            <div>
+                <q-icon
+                    :name="passwordInfo.isValidLowercase ? 'check_circle' : 'cancel'"
+                    :color="passwordInfo.isValidLowercase ? 'positive' : 'negative'"
+                />
+                Должен содержать минимум 1 латинскую строчную букву
+            </div>
+            <div>
+                <q-icon
+                    :name="passwordInfo.isValidDigit ? 'check_circle' : 'cancel'"
+                    :color="passwordInfo.isValidDigit ? 'positive' : 'negative'"
+                />
+                Должен содержать минимум 1 цифру
+            </div>
         </div>
     </div>
 </template>
