@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { Ref, defineComponent, ref, watch } from 'vue';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
-import InputPassword from 'src/shared/ui/inputPassword.vue';
+import InputPassword from './ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
 import { Country, UserData } from './lib/types';
 import InputName from './ui/inputName.vue';
