@@ -12,7 +12,7 @@
             (val) => (val && val.length) || 'Обязательное поле',
             (val, rules) => rules.email(val) || 'Некорректный Email',
         ]"
-        class="signup-form__input text-body1"
+        class="text-body1"
     />
 </template>
 
