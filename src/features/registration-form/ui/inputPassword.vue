@@ -1,7 +1,7 @@
 <template>
     <div class="password-container">
         <q-input
-            label="Пароль"
+            label="Пароль*"
             type="password"
             outlined
             clearable

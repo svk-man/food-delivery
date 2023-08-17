@@ -3,7 +3,7 @@
         <h4 class="signin-form__title q-ma-none q-mb-md">Авторизация</h4>
         <input-email @update:email="(email: string) => (userEmail = email)" />
         <q-input
-            label="Пароль"
+            label="Пароль*"
             :type="isPassword ? 'password' : 'text'"
             outlined
             clearable

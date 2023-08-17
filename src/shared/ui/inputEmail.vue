@@ -1,6 +1,6 @@
 <template>
     <q-input
-        label="Email"
+        label="Email*"
         outlined
         clearable
         stack-label
