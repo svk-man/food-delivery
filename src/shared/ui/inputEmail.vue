@@ -9,10 +9,15 @@
         v-model="userEmail"
         @update:model-value="updateEmail"
         :rules="[
-            (val) => (val && val.length) || 'Обязательное поле',
+            (val) => {
+                if (!(val && val.length)) return 'Обязательное поле';
+                if (/[^\u0000-\u007F]/.test(val)) return 'Должен содержать только латинские символы';
+
+                return true;
+            },
             (val, rules) => rules.email(val) || 'Некорректный Email',
         ]"
-        class="signup-form__input text-body1"
+        class="text-body1"
     />
 </template>
 

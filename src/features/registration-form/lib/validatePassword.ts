@@ -1,4 +1,4 @@
-import { PasswordValidator } from '../../features/registration-form/lib/types';
+import { PasswordValidator } from './types';
 
 export function validatePassword(password: string | null): PasswordValidator {
     const isCorrectLength = password ? password.length >= 8 : false;
