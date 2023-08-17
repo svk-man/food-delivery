@@ -1,26 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
+import { Cookies } from 'quasar';
 
-export interface Product {
-    results: [];
-    id: string;
-    version: string;
-    versionModifiedAt: string;
-    lastMessageSequenceNumber: number;
-    createdAt: string;
-    lastModifiedAt: string;
-    lastModifiedBy: object;
-    createdBy: object;
-    productType: object;
-    masterData: {
-        current: {
-            name: {
-                ru: string;
-            };
-        };
-    };
-    key: string;
-    priceMode: string;
-    lastVariantId: number;
+export function getTokenFromCookies(): string {
+    return Cookies.get('auth_token');
+}
+export function saveTokenToCookies(bearerToken: string): void {
+    Cookies.set('auth_token', bearerToken);
 }
 
 export async function fetchAccessToken(id: string, secret: string, scope: string): Promise<string | null> {
@@ -44,16 +29,17 @@ export async function fetchAccessToken(id: string, secret: string, scope: string
     }
 }
 
-export async function fetchProducts(key: string, token: string): Promise<Product[] | null> {
-    try {
-        const response: AxiosResponse<{ results: Product[] }> = await axios({
-            url: `https://api.us-central1.gcp.commercetools.com/${key}/products`,
-            method: 'get',
-            headers: { Authorization: `Bearer ${token}` },
-        });
+export async function auth(): Promise<void> {
+    const isTokenExist = getTokenFromCookies();
 
-        return response.data.results;
-    } catch (error) {
-        return null;
+    if (!isTokenExist) {
+        const id: string = import.meta.env.VITE_SPA_CLIENT_ID;
+        const secret: string = import.meta.env.VITE_SPA_CLIENT_SECRET;
+        const scope: string = import.meta.env.VITE_SPA_SCOPE;
+
+        const token = `${await fetchAccessToken(id, secret, scope)}`;
+        if (token) {
+            saveTokenToCookies(token);
+        }
     }
 }
