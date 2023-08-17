@@ -1,6 +1,6 @@
 <template>
     <q-select
-        label="Страна"
+        label="Страна*"
         stack-label
         outlined
         color="accent"

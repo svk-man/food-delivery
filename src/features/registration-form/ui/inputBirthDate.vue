@@ -1,6 +1,6 @@
 <template>
     <q-input
-        label="Дата рождения"
+        label="Дата рождения*"
         outlined
         clearable
         stack-label

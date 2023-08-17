@@ -1,6 +1,6 @@
 <template>
     <q-input
-        label="Индекс"
+        label="Индекс*"
         outlined
         clearable
         stack-label

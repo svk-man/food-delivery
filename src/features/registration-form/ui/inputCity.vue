@@ -1,6 +1,6 @@
 <template>
     <q-input
-        label="Город"
+        label="Город*"
         outlined
         clearable
         stack-label

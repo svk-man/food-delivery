@@ -1,7 +1,7 @@
 <template>
     <div class="signup-form__name">
         <q-input
-            label="Имя"
+            label="Имя*"
             outlined
             clearable
             stack-label
@@ -13,7 +13,7 @@
             class="signup-form__input text-body1"
         />
         <q-input
-            label="Фамилия"
+            label="Фамилия*"
             outlined
             clearable
             stack-label
