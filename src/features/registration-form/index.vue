@@ -23,6 +23,15 @@
             color="positive"
             class="full-width font-inter-500 signup-form__btn"
         />
+        <q-btn
+            to="/signin"
+            label="Войти"
+            type="submit"
+            push
+            padding="md"
+            color="positive"
+            class="full-width font-inter-500 signup-form__btn"
+        />
     </q-form>
 </template>
 
