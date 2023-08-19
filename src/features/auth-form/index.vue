@@ -42,6 +42,14 @@
             color="positive"
             class="full-width font-inter-500 signin-form__btn"
         />
+        <q-btn
+            to="/register"
+            label="Зарегистрироваться"
+            push
+            padding="md"
+            color="positive"
+            class="full-width font-inter-500 signin-form__btn"
+        />
     </q-form>
 </template>
 
