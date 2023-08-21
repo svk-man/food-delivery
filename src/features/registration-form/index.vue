@@ -4,16 +4,60 @@
         <input-name @update:first-name="handleFirstNameUpdate" @update:last-name="handleLastNameUpdate" />
         <input-email @update:email="handleEmailUpdate" class="signup-form__input" />
         <input-birth-date @update:date="handleDateUpdate" />
-        <select-country @update:country="handleCountryUpdate" />
-        <input-postal-code
-            :disable="!postalCodePattern"
-            :rules="[
-                (val: string) => (val && val.length) || 'Обязательное поле',
-                (val: string) => isValidPostalCode(postalCodePattern, val) || 'Индекс не соотвествует выбранной стране',
-            ]"
-        />
-        <input-city @update:city="handleCityUpdate" />
-        <input-street @update:street="handleStreetUpdate" />
+        <div class="addresses">
+            <div class="addresses__address">
+                <div class="addresses__address-header">
+                    <q-icon name="local_shipping" size="26px" />
+                    <span>Shipping address</span>
+                </div>
+                <q-checkbox
+                    class="checkbox"
+                    v-model="valShipping"
+                    label="Использовать как адрес доставки по умолчанию"
+                    color="orange"
+                />
+                <select-country @update:country="handleCountryUpdateShipping" />
+                <input-postal-code
+                    :disable="!postalCodePatternShipping"
+                    :rules="[
+                        (val: string) => (val && val.length) || 'Обязательное поле',
+                        (val: string) =>
+                            isValidPostalCode(postalCodePatternShipping, val) ||
+                            'Индекс не соотвествует выбранной стране',
+                    ]"
+                    @update:postal="handlePostalUpdateShipping"
+                />
+                <input-city @update:city="handleCityUpdateShipping" />
+                <input-street @update:street="handleStreetUpdateShipping" />
+                <q-toggle v-model="sameAddress" color="yellow" label="Сохранить и как биллинг" />
+            </div>
+            <div v-if="!sameAddress" class="addresses__address">
+                <div class="addresses__address-header">
+                    <q-icon name="local_atm" size="26px" />
+                    <span>Billing address</span>
+                </div>
+                <q-checkbox
+                    class="checkbox"
+                    v-model="valBilling"
+                    label="Использовать как адрес для выставления счетов по умолчанию"
+                    color="orange"
+                />
+                <select-country @update:country="handleCountryUpdateBilling" />
+                <input-postal-code
+                    :disable="!postalCodePatternBilling"
+                    :rules="[
+                        (val: string) => (val && val.length) || 'Обязательное поле',
+                        (val: string) =>
+                            isValidPostalCode(postalCodePatternBilling, val) ||
+                            'Индекс не соотвествует выбранной стране',
+                    ]"
+                    @update:postal="handlePostalUpdateBilling"
+                />
+                <input-city @update:city="handleCityUpdateBilling" />
+                <input-street @update:street="handleStreetUpdateBilling" />
+            </div>
+        </div>
+
         <input-password @update:password="handlePasswordUpdate" />
         <q-btn
             label="Зарегистрироваться"
@@ -40,7 +84,7 @@ import { Ref, defineComponent, ref, watch } from 'vue';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
 import InputPassword from './ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
-import { Country, UserData } from './lib/types';
+import { Address, Country, Customer } from './lib/types';
 import InputName from './ui/inputName.vue';
 import InputBirthDate from './ui/inputBirthDate.vue';
 import SelectCountry from './ui/inputCountry.vue';
@@ -49,48 +93,137 @@ import InputCity from './ui/inputCity.vue';
 import InputStreet from './ui/inputStreet.vue';
 import handleUserRegistration from './model/handleUserRegistration';
 
-const userData: UserData = {
+const customerData: Customer = {
+    email: '',
+    password: '',
     firstName: '',
     lastName: '',
-    email: '',
     dateOfBirth: '',
-    city: '',
-    street: '',
-    password: '',
+    addresses: [],
 };
-const selectedCountry: Ref<Country> = ref({ name: '', postalCodePattern: '' });
-const postalCodePattern = ref('');
+const addressShipping: Address = {
+    firstName: '',
+    lastName: '',
+    streetName: '',
+    postalCode: '',
+    city: '',
+    country: '',
+    email: '',
+};
+const addressBilling: Address = {
+    firstName: '',
+    lastName: '',
+    streetName: '',
+    postalCode: '',
+    city: '',
+    country: '',
+    email: '',
+};
+
+const valShipping = ref(false);
+const valBilling = ref(false);
+const sameAddress = ref(false);
+
+const selectedCountryShipping: Ref<Country> = ref({ name: '', postalCodePattern: '' });
+const selectedCountryBilling: Ref<Country> = ref({ name: '', postalCodePattern: '' });
+
+const postalCodePatternShipping = ref('');
+const postalCodePatternBilling = ref('');
 
 const handleFirstNameUpdate = (firstName: string): void => {
-    userData.firstName = firstName;
+    customerData.firstName = firstName;
 };
 const handleLastNameUpdate = (lastName: string): void => {
-    userData.lastName = lastName;
+    customerData.lastName = lastName;
 };
 const handleEmailUpdate = (email: string): void => {
-    userData.email = email;
+    customerData.email = email;
 };
 const handleDateUpdate = (date: string): void => {
-    userData.dateOfBirth = date;
-};
-const handleCountryUpdate = (country: Country): void => {
-    selectedCountry.value = country;
-};
-const handleCityUpdate = (city: string): void => {
-    userData.city = city;
-};
-const handleStreetUpdate = (street: string): void => {
-    userData.street = street;
-};
-const handlePasswordUpdate = (password: string): void => {
-    userData.password = password;
-};
-const submit = (): void => {
-    handleUserRegistration(userData);
+    customerData.dateOfBirth = date;
 };
 
-watch(selectedCountry, () => {
-    postalCodePattern.value = selectedCountry.value.postalCodePattern;
+const countriesWithCode: { [key: string]: string } = {
+    Россия: 'RU',
+    Казахстан: 'KZ',
+    США: 'US',
+    Канада: 'CA',
+};
+const handleCountryUpdateShipping = (country: Country): void => {
+    selectedCountryShipping.value = country;
+
+    addressShipping.country = `${countriesWithCode[country.name]}`;
+};
+const handleCountryUpdateBilling = (country: Country): void => {
+    selectedCountryBilling.value = country;
+
+    addressBilling.country = `${countriesWithCode[country.name]}`;
+};
+
+const handlePostalUpdateShipping = (postal: string): void => {
+    addressShipping.postalCode = postal;
+};
+const handlePostalUpdateBilling = (postal: string): void => {
+    addressBilling.postalCode = postal;
+};
+const handleCityUpdateShipping = (city: string): void => {
+    addressShipping.city = city;
+};
+const handleCityUpdateBilling = (city: string): void => {
+    addressBilling.city = city;
+};
+
+const handleStreetUpdateShipping = (street: string): void => {
+    addressShipping.streetName = street;
+};
+const handleStreetUpdateBilling = (street: string): void => {
+    addressBilling.streetName = street;
+};
+
+const handlePasswordUpdate = (password: string): void => {
+    customerData.password = password;
+};
+
+function isObjectEmpty(object: object): boolean {
+    return Object.keys(object).length < 1;
+}
+function addAdressIfNotEmpty(address: Address): void {
+    if (!isObjectEmpty(address)) {
+        customerData.addresses.push(address);
+    }
+}
+
+function setDefaultShippingAddress(): void {
+    customerData.defaultShippingAddress = 0;
+}
+function setDefaultBillingAddress(): void {
+    customerData.defaultBillingAddress = 1;
+}
+
+function setShippingAsDefaultToBilling(): void {
+    customerData.defaultBillingAddress = 0;
+}
+
+function addDefaultAddressHandler(): void {
+    if (valShipping.value) setDefaultShippingAddress();
+    if (valBilling.value) setDefaultBillingAddress();
+    if (sameAddress.value) setShippingAsDefaultToBilling();
+}
+
+const submit = (): void => {
+    addAdressIfNotEmpty(addressShipping);
+    addAdressIfNotEmpty(addressBilling);
+
+    addDefaultAddressHandler();
+
+    handleUserRegistration(customerData);
+};
+
+watch(selectedCountryShipping, () => {
+    postalCodePatternShipping.value = selectedCountryShipping.value.postalCodePattern;
+});
+watch(selectedCountryBilling, () => {
+    postalCodePatternBilling.value = selectedCountryBilling.value.postalCodePattern;
 });
 
 defineComponent({
@@ -114,6 +247,24 @@ defineComponent({
         font-size: 16px;
         line-height: 24px;
         font-weight: 500;
+    }
+    .addresses {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        &__address {
+            flex-grow: 1;
+            &-header {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+            }
+            .checkbox {
+                max-width: 270px;
+            }
+        }
     }
 }
 </style>

@@ -1,23 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { Notify } from 'quasar';
 import { auth, getTokenFromCookies } from 'src/shared/api/auth';
-import { UserData } from '../lib/types';
+import { Customer } from '../lib/types';
 
-export interface Customer {
-    addresses: [];
-    email: string;
-    firstName: string;
-    id: string;
-    isEmailVerified: boolean;
-    lastName: string;
-    password: string;
-    version: number;
-    createdAt: string;
-    lastModifiedAt: string;
-    authenticationMode: 'Password';
-}
-
-export default async function handleUserRegistration(data: UserData): Promise<void | null> {
+export default async function handleUserRegistration(data: Customer): Promise<void | null> {
     data.dateOfBirth = `${data.dateOfBirth.replaceAll('/', '-')}`;
 
     const token = getTokenFromCookies();
