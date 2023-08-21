@@ -14,6 +14,14 @@ const routes: RouteRecordRaw[] = [
         path: '/signin',
         component: () => import('../../pages/authorization'),
     },
+    {
+        path: '/cart',
+        component: () => import('../../pages/cart'),
+    },
+    {
+        path: '/catalog',
+        component: () => import('../../pages/catalog'),
+    },
 
     // Always leave this as last one,
     // but you can also remove it
