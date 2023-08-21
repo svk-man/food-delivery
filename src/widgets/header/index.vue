@@ -8,6 +8,22 @@
                 <div class="header__buttons font-inter-500">
                     <div class="gt-sm">
                         <q-btn to="/" label="Главная" class="header__buttons-item" rounded text-color="black" flat />
+                        <q-btn
+                            to="/catalog"
+                            label="Каталог"
+                            class="header__buttons-item"
+                            rounded
+                            text-color="black"
+                            flat
+                        />
+                        <q-btn
+                            to="/cart"
+                            label="Корзина"
+                            class="header__buttons-item"
+                            rounded
+                            text-color="black"
+                            flat
+                        />
                     </div>
                     <div class="header__buttons_auth gt-sm">
                         <q-btn
