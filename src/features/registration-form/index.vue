@@ -184,11 +184,8 @@ const handlePasswordUpdate = (password: string): void => {
     customerData.password = password;
 };
 
-function isObjectEmpty(object: object): boolean {
-    return Object.keys(object).length < 1;
-}
 function addAdressIfNotEmpty(address: Address): void {
-    if (!isObjectEmpty(address)) {
+    if (address.city && address.country && address.postalCode) {
         customerData.addresses.push(address);
     }
 }
@@ -201,7 +198,9 @@ function setDefaultBillingAddress(): void {
 }
 
 function setShippingAsDefaultToBilling(): void {
-    customerData.defaultBillingAddress = 0;
+    if (customerData.addresses[0]) {
+        customerData.addresses.push(customerData.addresses[0]);
+    }
 }
 
 function addDefaultAddressHandler(): void {
