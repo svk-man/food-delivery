@@ -1,7 +1,6 @@
 export interface Country {
     postalCodePattern: string;
     name: string;
-    // postalCodePattern: string;
     postalCodePatternShipping?: string;
     postalCodePatternBilling?: string;
 }

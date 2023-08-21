@@ -134,34 +134,21 @@ const handleDateUpdate = (date: string): void => {
     customerData.dateOfBirth = date;
 };
 
-const countryCodes = ['RU', 'KZ', 'US', 'CA'];
-
+const countriesWithCode: { [key: string]: string } = {
+    Россия: 'RU',
+    Казахстан: 'KZ',
+    США: 'US',
+    Канада: 'CA',
+};
 const handleCountryUpdateShipping = (country: Country): void => {
-    if (!countryCodes[0] || !countryCodes[1] || !countryCodes[2] || !countryCodes[3]) return;
-
     selectedCountryShipping.value = country;
 
-    addressShipping.country =
-        country.name === 'Россия'
-            ? countryCodes[0]
-            : country.name === 'Казахстан'
-            ? countryCodes[1]
-            : country.name === 'США'
-            ? countryCodes[2]
-            : countryCodes[3];
+    addressShipping.country = `${countriesWithCode[country.name]}`;
 };
 const handleCountryUpdateBilling = (country: Country): void => {
-    if (!countryCodes[0] || !countryCodes[1] || !countryCodes[2] || !countryCodes[3]) return;
     selectedCountryBilling.value = country;
 
-    addressBilling.country =
-        country.name === 'Россия'
-            ? countryCodes[0]
-            : country.name === 'Казахстан'
-            ? countryCodes[1]
-            : country.name === 'США'
-            ? countryCodes[2]
-            : countryCodes[3];
+    addressBilling.country = `${countriesWithCode[country.name]}`;
 };
 
 const handlePostalUpdateShipping = (postal: string): void => {
