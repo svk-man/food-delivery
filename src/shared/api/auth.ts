@@ -43,3 +43,12 @@ export async function auth(): Promise<void> {
         }
     }
 }
+export async function manageToken(): Promise<string> {
+    let token = getTokenFromCookies();
+
+    if (!token) {
+        await auth();
+        token = getTokenFromCookies();
+    }
+    return token;
+}
