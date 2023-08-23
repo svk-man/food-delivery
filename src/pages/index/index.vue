@@ -11,8 +11,17 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent } from 'vue';
+import { getTokenFromCookies, auth } from 'src/shared/api/auth';
+import { defineComponent, onMounted } from 'vue';
 
+async function getToken(): Promise<void> {
+    const token = getTokenFromCookies();
+    if (!token) {
+        await auth();
+    }
+}
+
+onMounted(getToken);
 defineComponent({
     name: 'IndexPage',
 });
