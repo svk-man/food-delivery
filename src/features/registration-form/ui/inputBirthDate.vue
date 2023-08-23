@@ -16,7 +16,7 @@
         <template v-slot:append>
             <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-date color="positive" v-model="date">
+                    <q-date color="positive" v-model="date" @update:model-value="updateDate">
                         <div class="row items-center justify-end">
                             <q-btn v-close-popup label="Close" flat />
                         </div>
