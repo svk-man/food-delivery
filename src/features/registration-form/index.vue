@@ -140,7 +140,6 @@ const handleEmailUpdate = (email: string): void => {
     customerData.email = email;
 };
 const handleDateUpdate = (date: string): void => {
-    console.log('date: ', date);
     customerData.dateOfBirth = date;
 };
 
