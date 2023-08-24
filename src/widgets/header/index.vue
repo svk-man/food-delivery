@@ -2,12 +2,12 @@
     <q-header class="header bg-secondary q-pa-sm">
         <q-toolbar class="header__toolbar q-py-md bg-primary">
             <q-toolbar-title>
-                <a class="logo" href="/">
+                <q-btn class="logo" to="/" unelevated>
                     <h1 class="logo__text font-inter-900">
                         <span>Food</span>
                         Delivery
                     </h1>
-                </a>
+                </q-btn>
             </q-toolbar-title>
             <div class="header__buttons font-inter-500">
                 <div class="gt-sm">
@@ -111,7 +111,8 @@ defineComponent({
 
 .logo {
     display: inline-block;
-    width: 230px;
+    width: 240px;
+    padding: 0;
     text-decoration: none;
     color: $deep-purple-10;
     transition: 0.3s;
