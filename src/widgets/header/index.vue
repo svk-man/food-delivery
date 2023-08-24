@@ -1,9 +1,14 @@
 <template>
-    <q-header class="bg-secondary q-pa-sm">
-        <q-toolbar class="header q-py-sm bg-primary">
-            <div class="header__content">
+    <q-header class="header bg-secondary q-py-sm">
+        <div class="container">
+            <q-toolbar class="header__toolbar q-py-md bg-primary">
                 <q-toolbar-title>
-                    <q-img src="/logo.png" :style="{ width: '80px' }" />
+                    <q-btn class="logo" to="/" unelevated>
+                        <h1 class="logo__text font-inter-900">
+                            <span>Food</span>
+                            Delivery
+                        </h1>
+                    </q-btn>
                 </q-toolbar-title>
                 <div class="header__buttons font-inter-500">
                     <div class="gt-sm">
@@ -55,8 +60,8 @@
                         />
                     </div>
                 </div>
-            </div>
-        </q-toolbar>
+            </q-toolbar>
+        </div>
     </q-header>
     <q-drawer v-model="leftDrawerOpen" bordered>
         <div class="sidebar">
@@ -93,14 +98,8 @@ defineComponent({
 
 <style lang="scss" scoped>
 .header {
-    max-width: 1576px;
-    margin: 0 auto;
-    border-radius: 12px;
-    display: flex;
-
-    &__content {
-        display: flex;
-        flex-basis: 100%;
+    &__toolbar {
+        border-radius: 12px;
     }
 
     &__buttons {
@@ -121,6 +120,27 @@ defineComponent({
             gap: 12px;
             height: fit-content;
         }
+    }
+}
+
+.logo {
+    display: inline-block;
+    width: 240px;
+    padding: 0;
+    text-decoration: none;
+    color: $deep-purple-10;
+    transition: 0.3s;
+    &__text {
+        margin: 0;
+        font-size: 30px;
+        line-height: 35px;
+        text-transform: uppercase;
+        span {
+            color: $orange-5;
+        }
+    }
+    &:hover {
+        color: $orange-5;
     }
 }
 

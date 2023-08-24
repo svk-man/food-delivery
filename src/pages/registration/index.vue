@@ -1,6 +1,8 @@
 <template>
-    <q-page padding>
-        <registration-form />
+    <q-page>
+        <div class="container">
+            <registration-form />
+        </div>
     </q-page>
 </template>
 

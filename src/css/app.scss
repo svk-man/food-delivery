@@ -17,6 +17,18 @@
     src: url(./fonts/Inter/Inter-Bold.ttf);
 }
 
+@font-face {
+    font-family: Inter;
+    font-weight: 800;
+    src: url(./fonts/Inter/Inter-ExtraBold.ttf);
+}
+
+@font-face {
+    font-family: Inter;
+    font-weight: 900;
+    src: url(./fonts/Inter/Inter-Black.ttf);
+}
+
 .font-inter-400 {
     font-family: Inter;
     font-weight: 400;
@@ -31,7 +43,34 @@
     font-family: Inter;
     font-weight: 700;
 }
+
+.font-inter-800 {
+    font-family: Inter;
+    font-weight: 800;
+}
+
+.font-inter-900 {
+    font-family: Inter;
+    font-weight: 900;
+}
+
+.container {
+    max-width: 1576px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
 // Border radius of q-input elements
 .q-field--outlined .q-field__control {
     border-radius: 12px;
+}
+
+// Styles for header logo
+body.desktop .logo.q-hoverable:hover > .q-focus-helper {
+    background-color: transparent;
+    opacity: 0;
 }

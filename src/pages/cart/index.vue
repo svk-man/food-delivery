@@ -1,6 +1,8 @@
 <template>
-    <q-page padding>
-        <h1>Корзина</h1>
+    <q-page>
+        <div class="container">
+            <h2>Корзина</h2>
+        </div>
     </q-page>
 </template>
 

@@ -1,6 +1,8 @@
 <template>
-    <q-page padding>
-        <auth-form />
+    <q-page>
+        <div class="container">
+            <auth-form />
+        </div>
     </q-page>
 </template>
 
@@ -12,5 +14,3 @@ defineComponent({
     name: 'AuthorizationPage',
 });
 </script>
-
-<style scoped></style>
