@@ -1,24 +1,26 @@
 <template>
     <div class="not-found-page">
-        <div class="not-found-page__content">
-            <LottieAnimation
-                :animation-data="AnimationJSON"
-                :auto-play="true"
-                :loop="true"
-                :speed="1"
-                ref="animation"
-            />
-            <h2 class="not-found-page__title font-inter-700">Ошибка 404. <span>Что-то пошло не так.</span></h2>
-            <p class="not-found-page__text q-my-md q-mx-auto font-inter-400">
-                Страница, которую вы ищете, временно недоступна или её уже нет
-            </p>
-            <q-btn
-                href="/"
-                label="Вернуться на главную"
-                class="full-width not-found-page__btn font-inter-500"
-                push
-                padding="md"
-            />
+        <div class="container">
+            <div class="not-found-page__content">
+                <LottieAnimation
+                    :animation-data="AnimationJSON"
+                    :auto-play="true"
+                    :loop="true"
+                    :speed="1"
+                    ref="animation"
+                />
+                <h2 class="not-found-page__title font-inter-700">Ошибка 404. <span>Что-то пошло не так.</span></h2>
+                <p class="not-found-page__text q-my-md q-mx-auto font-inter-400">
+                    Страница, которую вы ищете, временно недоступна или её уже нет
+                </p>
+                <q-btn
+                    href="/"
+                    label="Вернуться на главную"
+                    class="full-width not-found-page__btn font-inter-500"
+                    push
+                    padding="md"
+                />
+            </div>
         </div>
     </div>
 </template>

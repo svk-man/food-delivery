@@ -1,7 +1,9 @@
 <template>
-    <q-page padding>
-        <h1>Каталог</h1>
-        <product-list />
+    <q-page>
+        <div class="container">
+            <h2>Каталог</h2>
+            <product-list />
+        </div>
     </q-page>
 </template>
 

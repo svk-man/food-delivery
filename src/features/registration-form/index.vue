@@ -1,6 +1,6 @@
 <template>
     <q-form @submit.prevent="submit" class="signup-form">
-        <h4 class="signup-form__title q-ma-none q-mb-md">Регистрация</h4>
+        <h2 class="signup-form__title q-ma-none q-mb-md">Регистрация</h2>
         <input-name @update:first-name="handleFirstNameUpdate" @update:last-name="handleLastNameUpdate" />
         <input-email @update:email="handleEmailUpdate" class="signup-form__input" />
         <input-birth-date @update:date="handleDateUpdate" />

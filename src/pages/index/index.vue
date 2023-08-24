@@ -1,11 +1,20 @@
 <template>
-    <q-page padding>
-        <h3>Главная</h3>
-        <div class="links">
-            <q-btn to="/catalog" label="Каталог" class="header__buttons-item" rounded text-color="black" flat />
-            <q-btn to="/cart" label="Корзина" class="header__buttons-item" rounded text-color="black" flat />
-            <q-btn to="/register" label="Регистрация" class="header__buttons-item" rounded text-color="black" flat />
-            <q-btn to="/signin" label="Войти" class="header__buttons-item" rounded text-color="black" flat />
+    <q-page>
+        <div class="container">
+            <h2>Главная</h2>
+            <div class="links">
+                <q-btn to="/catalog" label="Каталог" class="header__buttons-item" rounded text-color="black" flat />
+                <q-btn to="/cart" label="Корзина" class="header__buttons-item" rounded text-color="black" flat />
+                <q-btn
+                    to="/register"
+                    label="Регистрация"
+                    class="header__buttons-item"
+                    rounded
+                    text-color="black"
+                    flat
+                />
+                <q-btn to="/signin" label="Войти" class="header__buttons-item" rounded text-color="black" flat />
+            </div>
         </div>
     </q-page>
 </template>

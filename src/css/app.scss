@@ -54,6 +54,16 @@
     font-weight: 900;
 }
 
+.container {
+    max-width: 1576px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
 // Border radius of q-input elements
 .q-field--outlined .q-field__control {
     border-radius: 12px;

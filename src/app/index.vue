@@ -2,7 +2,7 @@
     <q-layout>
         <Header />
         <q-page-container class="bg-secondary">
-            <div class="container q-py-md">
+            <div class="container">
                 <RouterView />
             </div>
         </q-page-container>
