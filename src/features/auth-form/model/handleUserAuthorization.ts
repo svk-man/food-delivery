@@ -18,6 +18,17 @@ export interface PasswordFlowReturned {
     token_type: string;
 }
 
+export interface PasswordFlowError {
+    response: {
+        data: {
+            error: string;
+            error_description: string;
+            message: string;
+            statusCode: number;
+        };
+    };
+}
+
 export async function fetchTokenWithPasswordFlow(
     password: string,
     email: string
@@ -41,10 +52,18 @@ export async function fetchTokenWithPasswordFlow(
                 scope,
             },
         });
-        Notify.create('Успешный вход! meow~ 🐈🐈');
 
         return response.data;
     } catch (error) {
+        const PasswordFlowErr = error as PasswordFlowError;
+        const responseErrorCode = PasswordFlowErr.response.data.error;
+
+        let message;
+        if (responseErrorCode === 'invalid_customer_account_credentials') {
+            message = 'Неверный логин или пароль, пожалуйста, попробуйте ввести заново! 🐇';
+        }
+
+        Notify.create({ message, icon: 'warning_amber' });
         return null;
     }
 }

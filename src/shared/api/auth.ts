@@ -45,8 +45,7 @@ export async function auth(): Promise<void> {
 }
 export async function manageToken(): Promise<string> {
     let token = getTokenFromCookies();
-
-    if (!token) {
+    if (!token || token === 'null') {
         await auth();
         token = getTokenFromCookies();
     }
