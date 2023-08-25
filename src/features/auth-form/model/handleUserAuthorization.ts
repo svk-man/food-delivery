@@ -18,6 +18,16 @@ export interface PasswordFlowReturned {
     token_type: string;
 }
 
+export interface PasswordFlowError {
+    response: {
+        data: {
+            error_description: string;
+            message: string;
+            statusCode: number;
+        };
+    };
+}
+
 export async function fetchTokenWithPasswordFlow(
     password: string,
     email: string
@@ -41,10 +51,19 @@ export async function fetchTokenWithPasswordFlow(
                 scope,
             },
         });
-        Notify.create('Успешный вход! meow~ 🐈🐈');
+        Notify.create('Ваш токен сгенерирован! ~ 🌱');
 
         return response.data;
-    } catch (error) {
+    } catch (error: unknown) {
+        const PasswordFlowErr = error as PasswordFlowError;
+        const responseMessage = PasswordFlowErr.response.data.message;
+
+        let message;
+        if (responseMessage === 'Customer account with the given credentials not found.') {
+            message = 'Неверный логин или пароль, пожалуйста, попробуйте ввести заново! 🐇';
+        }
+
+        Notify.create({ message, icon: 'warning_amber' });
         return null;
     }
 }
