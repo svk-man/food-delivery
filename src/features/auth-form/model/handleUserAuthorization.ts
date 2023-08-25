@@ -21,6 +21,7 @@ export interface PasswordFlowReturned {
 export interface PasswordFlowError {
     response: {
         data: {
+            error: string;
             error_description: string;
             message: string;
             statusCode: number;
@@ -51,15 +52,14 @@ export async function fetchTokenWithPasswordFlow(
                 scope,
             },
         });
-        Notify.create('Ваш токен сгенерирован! ~ 🌱');
 
         return response.data;
-    } catch (error: unknown) {
+    } catch (error) {
         const PasswordFlowErr = error as PasswordFlowError;
-        const responseMessage = PasswordFlowErr.response.data.message;
+        const responseErrorCode = PasswordFlowErr.response.data.error;
 
         let message;
-        if (responseMessage === 'Customer account with the given credentials not found.') {
+        if (responseErrorCode === 'invalid_customer_account_credentials') {
             message = 'Неверный логин или пароль, пожалуйста, попробуйте ввести заново! 🐇';
         }
 
