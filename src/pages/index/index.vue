@@ -6,6 +6,7 @@
                 <q-btn to="/catalog" label="Каталог" class="header__buttons-item" rounded text-color="black" flat />
                 <q-btn to="/cart" label="Корзина" class="header__buttons-item" rounded text-color="black" flat />
                 <q-btn
+                    v-if="!isUserAuthenticated"
                     to="/register"
                     label="Регистрация"
                     class="header__buttons-item"

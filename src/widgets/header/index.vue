@@ -92,7 +92,11 @@
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { isAuthenticated } from 'src/shared/api/auth';
 
-const linksToPages = ref([{ to: '/', label: 'Главная' }]);
+const linksToPages = ref([
+    { to: '/', label: 'Главная' },
+    { to: '/catalog', label: 'Каталог' },
+    { to: '/cart', label: 'Корзина' },
+]);
 
 const leftDrawerOpen = ref(false);
 function toggleLeftDrawer(): void {
@@ -105,8 +109,6 @@ onMounted(() => {
         linksToPages.value.push({ to: '/register', label: 'Регистрация' });
         linksToPages.value.push({ to: '/signin', label: 'Войти' });
     } else {
-        linksToPages.value.push({ to: '/catalog', label: 'Каталог' });
-        linksToPages.value.push({ to: '/cart', label: 'Корзина' });
         linksToPages.value.push({ to: '/logout', label: 'Выйти' });
     }
 });
