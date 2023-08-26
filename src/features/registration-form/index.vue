@@ -81,6 +81,7 @@
 
 <script setup lang="ts">
 import { Ref, defineComponent, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
 import InputPassword from './ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
@@ -92,6 +93,8 @@ import InputPostalCode from './ui/inputPostalCode.vue';
 import InputCity from './ui/inputCity.vue';
 import InputStreet from './ui/inputStreet.vue';
 import handleUserRegistration from './model/handleUserRegistration';
+
+const router = useRouter();
 
 const customerData: Customer = {
     email: '',
@@ -215,7 +218,11 @@ const submit = (): void => {
 
     addDefaultAddressHandler();
 
-    handleUserRegistration(customerData);
+    handleUserRegistration(customerData).then(() => {
+        setTimeout(() => {
+            router.push('/');
+        }, 1500);
+    });
 };
 
 watch(selectedCountryShipping, () => {
