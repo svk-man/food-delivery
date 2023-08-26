@@ -32,6 +32,7 @@
                     </div>
                     <div class="header__buttons_auth gt-sm">
                         <q-btn
+                            v-if="!isUserAuthenticated"
                             to="/register"
                             label="Регистрация"
                             icon="add"
@@ -40,9 +41,19 @@
                             text-color="white"
                         />
                         <q-btn
+                            v-if="!isUserAuthenticated"
                             to="/signin"
                             label="Войти"
                             icon-right="key"
+                            class="header__buttons-item header__buttons-item_auth"
+                            color="orange-5"
+                            text-color="white"
+                        />
+                        <q-btn
+                            v-else
+                            to="/logout"
+                            label="Выйти"
+                            icon-right="logout"
                             class="header__buttons-item header__buttons-item_auth"
                             color="orange-5"
                             text-color="white"
@@ -78,18 +89,27 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed, onMounted } from 'vue';
+import { isAuthenticated } from 'src/shared/api/auth';
 
-const linksToPages = ref([
-    { to: '/', label: 'Главная' },
-    { to: '/register', label: 'Регистрация' },
-    { to: '/signin', label: 'Войти' },
-]);
+const linksToPages = ref([{ to: '/', label: 'Главная' }]);
 
 const leftDrawerOpen = ref(false);
 function toggleLeftDrawer(): void {
     leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
+const isUserAuthenticated = computed(() => isAuthenticated());
+onMounted(() => {
+    if (!isUserAuthenticated.value) {
+        linksToPages.value.push({ to: '/register', label: 'Регистрация' });
+        linksToPages.value.push({ to: '/signin', label: 'Войти' });
+    } else {
+        linksToPages.value.push({ to: '/catalog', label: 'Каталог' });
+        linksToPages.value.push({ to: '/cart', label: 'Корзина' });
+        linksToPages.value.push({ to: '/logout', label: 'Выйти' });
+    }
+});
 
 defineComponent({
     name: 'HeaderComponent',
