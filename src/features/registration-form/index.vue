@@ -1,6 +1,6 @@
 <template>
     <q-form @submit.prevent="submit" class="signup-form">
-        <h2 class="signup-form__title q-ma-none q-mb-md">Регистрация</h2>
+        <h4 class="signup-form__title q-ma-none q-mb-md">Регистрация</h4>
         <input-name @update:first-name="handleFirstNameUpdate" @update:last-name="handleLastNameUpdate" />
         <input-email @update:email="handleEmailUpdate" class="signup-form__input" />
         <input-birth-date @update:date="handleDateUpdate" />
@@ -81,6 +81,7 @@
 
 <script setup lang="ts">
 import { Ref, defineComponent, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
 import InputPassword from './ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
@@ -92,6 +93,9 @@ import InputPostalCode from './ui/inputPostalCode.vue';
 import InputCity from './ui/inputCity.vue';
 import InputStreet from './ui/inputStreet.vue';
 import handleUserRegistration from './model/handleUserRegistration';
+import handleUserAuthorization from '../auth-form/model/handleUserAuthorization';
+
+const router = useRouter();
 
 const customerData: Customer = {
     email: '',
@@ -215,7 +219,14 @@ const submit = (): void => {
 
     addDefaultAddressHandler();
 
-    handleUserRegistration(customerData);
+    handleUserRegistration(customerData).then(() => {
+        const { password, email } = customerData;
+        handleUserAuthorization(password, email);
+
+        setTimeout(() => {
+            router.push('/');
+        }, 1500);
+    });
 };
 
 watch(selectedCountryShipping, () => {

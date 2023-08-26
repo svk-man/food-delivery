@@ -43,11 +43,17 @@ export async function auth(): Promise<void> {
         }
     }
 }
+
+export function isAuthenticated(): boolean {
+    const token = getTokenFromCookies();
+
+    return !(!token || token === 'null');
+}
+
 export async function manageToken(): Promise<string> {
-    let token = getTokenFromCookies();
-    if (!token || token === 'null') {
+    if (!isAuthenticated()) {
         await auth();
-        token = getTokenFromCookies();
     }
-    return token;
+
+    return getTokenFromCookies();
 }
