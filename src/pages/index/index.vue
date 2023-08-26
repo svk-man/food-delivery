@@ -13,18 +13,30 @@
                     text-color="black"
                     flat
                 />
-                <q-btn to="/signin" label="Войти" class="header__buttons-item" rounded text-color="black" flat />
+                <q-btn
+                    v-if="!isUserAuthenticated"
+                    to="/signin"
+                    label="Войти"
+                    class="header__buttons-item"
+                    rounded
+                    text-color="black"
+                    flat
+                />
+                <q-btn v-else to="/logout" label="Выйти" class="header__buttons-item" rounded text-color="black" flat />
             </div>
         </div>
     </q-page>
 </template>
 
 <script lang="ts" setup>
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { isAuthenticated } from 'src/shared/api/auth';
 
 defineComponent({
     name: 'IndexPage',
 });
+
+const isUserAuthenticated = computed(() => isAuthenticated());
 </script>
 <style lang="scss" scoped>
 .links {
