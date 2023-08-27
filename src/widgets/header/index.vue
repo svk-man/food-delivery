@@ -50,7 +50,7 @@
                         />
                         <q-btn
                             v-else
-                            to="/logout"
+                            @click="logout"
                             label="Выйти"
                             icon-right="logout"
                             class="header__buttons-item header__buttons-item_auth"
@@ -83,6 +83,7 @@
             >
                 {{ link.label }}
             </q-btn>
+            <q-btn v-if="isUserAuthenticated" @click="logout" class="text-capitalize font-inter-500">Выйти</q-btn>
         </div>
     </q-drawer>
 </template>
@@ -90,7 +91,8 @@
 <script lang="ts" setup>
 import { defineComponent, ref, computed, onMounted, watch } from 'vue';
 import { useUserStore } from 'src/app/store/user';
-import { isAuthenticated } from 'src/shared/api/auth';
+import { isAuthenticated, removeToken } from 'src/shared/api/auth';
+import { useRouter } from 'vue-router';
 
 const linksToPages = ref([] as { to: string; label: string }[]);
 
@@ -100,6 +102,8 @@ function toggleLeftDrawer(): void {
 }
 
 const userStore = useUserStore();
+const router = useRouter();
+
 const isUserAuthenticated = computed(() => userStore.isAuthenticated);
 
 onMounted(() => {
@@ -115,9 +119,14 @@ watch(isUserAuthenticated, (value) => {
         : [
               { to: '/catalog', label: 'Каталог' },
               { to: '/cart', label: 'Корзина' },
-              { to: '/logout', label: 'Выйти' },
           ];
 });
+
+const logout = (): void => {
+    removeToken();
+    userStore.setIsAuthenticated(false);
+    router.push('/signin');
+};
 
 defineComponent({
     name: 'HeaderComponent',
