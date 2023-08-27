@@ -38,7 +38,6 @@ defineComponent({
 });
 
 const userStore = useUserStore();
-
 const isUserAuthenticated = computed(() => userStore.isAuthenticated);
 </script>
 <style lang="scss" scoped>
