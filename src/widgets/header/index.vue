@@ -12,7 +12,6 @@
                 </q-toolbar-title>
                 <div class="header__buttons font-inter-500">
                     <div class="gt-sm">
-                        <q-btn to="/" label="Главная" class="header__buttons-item" rounded text-color="black" flat />
                         <q-btn
                             to="/catalog"
                             label="Каталог"
@@ -89,28 +88,35 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, ref, computed, onMounted } from 'vue';
+import { defineComponent, ref, computed, onMounted, watch } from 'vue';
+import { useUserStore } from 'src/app/store/user';
 import { isAuthenticated } from 'src/shared/api/auth';
 
-const linksToPages = ref([
-    { to: '/', label: 'Главная' },
-    { to: '/catalog', label: 'Каталог' },
-    { to: '/cart', label: 'Корзина' },
-]);
+const linksToPages = ref([] as { to: string; label: string }[]);
 
 const leftDrawerOpen = ref(false);
 function toggleLeftDrawer(): void {
     leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-const isUserAuthenticated = computed(() => isAuthenticated());
+const userStore = useUserStore();
+const isUserAuthenticated = computed(() => userStore.isAuthenticated);
+
 onMounted(() => {
-    if (!isUserAuthenticated.value) {
-        linksToPages.value.push({ to: '/register', label: 'Регистрация' });
-        linksToPages.value.push({ to: '/signin', label: 'Войти' });
-    } else {
-        linksToPages.value.push({ to: '/logout', label: 'Выйти' });
-    }
+    userStore.setIsAuthenticated(isAuthenticated());
+});
+
+watch(isUserAuthenticated, (value) => {
+    linksToPages.value = !value
+        ? [
+              { to: '/register', label: 'Регистрация' },
+              { to: '/signin', label: 'Войти' },
+          ]
+        : [
+              { to: '/catalog', label: 'Каталог' },
+              { to: '/cart', label: 'Корзина' },
+              { to: '/logout', label: 'Выйти' },
+          ];
 });
 
 defineComponent({

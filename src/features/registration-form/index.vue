@@ -83,6 +83,7 @@
 import { Ref, defineComponent, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
+import { useUserStore } from 'src/app/store/user';
 import InputPassword from './ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
 import { Address, Country, Customer } from './lib/types';
@@ -222,6 +223,9 @@ const submit = (): void => {
     handleUserRegistration(customerData).then(() => {
         const { password, email } = customerData;
         handleUserAuthorization(password, email);
+
+        const userStore = useUserStore();
+        userStore.setIsAuthenticated(true);
 
         setTimeout(() => {
             router.push('/');

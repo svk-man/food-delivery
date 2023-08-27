@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Notify } from 'quasar';
+import { saveTokenToCookies } from 'src/shared/api/auth';
 import { Customer } from '../../registration-form/lib/types';
 
 export interface MyCustomerSignin {
@@ -73,6 +74,8 @@ export default async function handleUserAuthorization(password: string, email: s
 
     const tokenWithExpireTime = await fetchTokenWithPasswordFlow(password, email);
     if (!tokenWithExpireTime) return null;
+
+    saveTokenToCookies(tokenWithExpireTime.access_token);
 
     try {
         const response: AxiosResponse<undefined | null> = await axios({

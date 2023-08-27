@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Cookies } from 'quasar';
+import { useUserStore } from 'src/app/store/user';
 
 export function getTokenFromCookies(): string {
     return Cookies.get('auth_token');

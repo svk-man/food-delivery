@@ -31,13 +31,14 @@
 
 <script lang="ts" setup>
 import { computed, defineComponent } from 'vue';
-import { isAuthenticated } from 'src/shared/api/auth';
+import { useUserStore } from 'src/app/store/user';
 
 defineComponent({
     name: 'IndexPage',
 });
 
-const isUserAuthenticated = computed(() => isAuthenticated());
+const userStore = useUserStore();
+const isUserAuthenticated = computed(() => userStore.isAuthenticated);
 </script>
 <style lang="scss" scoped>
 .links {
