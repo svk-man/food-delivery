@@ -56,6 +56,7 @@
 <script setup lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from 'src/app/store/user';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
 import handleUserAuthorization from './model/handleUserAuthorization';
 
@@ -67,6 +68,9 @@ const isPassword = ref(true);
 
 const submit = (): void => {
     handleUserAuthorization(userPassword.value, userEmail.value).then(() => {
+        const userStore = useUserStore();
+        userStore.setIsAuthenticated(true);
+
         setTimeout(() => {
             router.push('/');
         }, 1500);

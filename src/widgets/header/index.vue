@@ -90,7 +90,7 @@
 
 <script lang="ts" setup>
 import { defineComponent, ref, computed, onMounted } from 'vue';
-import { isAuthenticated } from 'src/shared/api/auth';
+import { useUserStore } from 'src/app/store/user';
 
 const linksToPages = ref([
     { to: '/', label: 'Главная' },
@@ -103,7 +103,9 @@ function toggleLeftDrawer(): void {
     leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-const isUserAuthenticated = computed(() => isAuthenticated());
+const userStore = useUserStore();
+const isUserAuthenticated = computed(() => userStore.isAuthenticated);
+
 onMounted(() => {
     if (!isUserAuthenticated.value) {
         linksToPages.value.push({ to: '/register', label: 'Регистрация' });
