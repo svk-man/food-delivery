@@ -1,7 +1,7 @@
 <template>
     <q-form @submit="submit" class="signin-form">
         <h2 class="signin-form__title q-ma-none q-mb-md">Авторизация</h2>
-        <input-email @update:email="(email: string) => (userEmail = email)" />
+        <input-email for="email" @update:email="(email: string) => (userEmail = email)" />
         <q-input
             label="Пароль*"
             :type="isPassword ? 'password' : 'text'"
