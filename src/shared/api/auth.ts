@@ -1,12 +1,18 @@
 import axios, { AxiosResponse } from 'axios';
 import { Cookies } from 'quasar';
-import { useUserStore } from 'src/app/store/user';
+
+const TOKEN_KEY = 'auth_token';
 
 export function getTokenFromCookies(): string {
-    return Cookies.get('auth_token');
+    return Cookies.get(TOKEN_KEY);
 }
+
 export function saveTokenToCookies(bearerToken: string): void {
-    Cookies.set('auth_token', bearerToken);
+    Cookies.set(TOKEN_KEY, bearerToken);
+}
+
+export function removeTokenFromCookies(): void {
+    Cookies.remove(TOKEN_KEY);
 }
 
 export async function fetchAccessToken(id: string, secret: string, scope: string): Promise<string | null> {
@@ -57,4 +63,8 @@ export async function manageToken(): Promise<string> {
     }
 
     return getTokenFromCookies();
+}
+
+export function removeToken(): void {
+    removeTokenFromCookies();
 }
