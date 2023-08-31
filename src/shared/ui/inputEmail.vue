@@ -1,5 +1,7 @@
 <template>
     <q-input
+        ref="email"
+        for="email"
         label="Email*"
         outlined
         clearable
