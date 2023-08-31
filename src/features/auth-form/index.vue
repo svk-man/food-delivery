@@ -1,5 +1,5 @@
 <template>
-    <q-form @submit="submit" class="signin-form">
+    <q-form @submit="loginHandlerFunc" class="signin-form">
         <h2 class="signin-form__title q-ma-none q-mb-md">Авторизация</h2>
         <input-email @update:email="(email: string) => (userEmail = email)" />
         <q-input
@@ -56,9 +56,8 @@
 <script setup lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from 'src/app/store/user';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
-import handleUserAuthorization from './model/handleUserAuthorization';
+import { loginHandler } from 'src/features/auth-form/model/handleUserAuthorization';
 
 const router = useRouter();
 
@@ -66,15 +65,11 @@ const userPassword = ref('');
 const userEmail = ref('');
 const isPassword = ref(true);
 
-const submit = (): void => {
-    handleUserAuthorization(userPassword.value, userEmail.value).then(() => {
-        const userStore = useUserStore();
-        userStore.setIsAuthenticated(true);
+const loginHandlerFunc = async (): Promise<void> => {
+    const password = `${userPassword.value}`;
+    const email = `${userEmail.value}`;
 
-        setTimeout(() => {
-            router.push('/');
-        }, 1500);
-    });
+    await loginHandler({ password, email }, router);
 };
 
 defineComponent({

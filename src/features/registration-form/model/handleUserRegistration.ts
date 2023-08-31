@@ -1,14 +1,14 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Notify } from 'quasar';
 import { manageToken } from 'src/shared/api/auth';
 import { Customer } from '../lib/types';
 
-export default async function handleUserRegistration(data: Customer): Promise<void | null> {
+export default async function handleUserRegistration(data: Customer): Promise<Customer | Error> {
     data.dateOfBirth = `${data.dateOfBirth.replaceAll('/', '-')}`;
 
     const token = await manageToken();
     try {
-        const response: AxiosResponse<{ results: Customer | undefined }> = await axios({
+        const response: AxiosResponse<Customer> = await axios({
             url: 'https://api.us-central1.gcp.commercetools.com/carrot78/customers',
             method: 'post',
             headers: {
@@ -18,8 +18,9 @@ export default async function handleUserRegistration(data: Customer): Promise<vo
             data: JSON.stringify(data),
         });
         Notify.create('Успешная регистрация! meow~ 🐈🐈');
-        return Promise.resolve();
+        return response.data;
     } catch (error) {
-        return null;
+        const err = <AxiosError>error;
+        return err;
     }
 }

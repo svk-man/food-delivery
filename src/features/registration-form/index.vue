@@ -84,6 +84,9 @@ import { Ref, defineComponent, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
 import { useUserStore } from 'src/app/store/user';
+import { Notify } from 'quasar';
+import { IAxiosResponse } from 'src/shared/api/interfaces';
+import { redirectTo } from 'src/shared/api/redirect';
 import InputPassword from './ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
 import { Address, Country, Customer } from './lib/types';
@@ -94,7 +97,7 @@ import InputPostalCode from './ui/inputPostalCode.vue';
 import InputCity from './ui/inputCity.vue';
 import InputStreet from './ui/inputStreet.vue';
 import handleUserRegistration from './model/handleUserRegistration';
-import handleUserAuthorization from '../auth-form/model/handleUserAuthorization';
+import login, { loginHandler } from '../auth-form/model/handleUserAuthorization';
 
 const router = useRouter();
 
@@ -214,23 +217,26 @@ function addDefaultAddressHandler(): void {
     if (sameAddress.value) setShippingAsDefaultToBilling();
 }
 
-const submit = (): void => {
+const submit = async (): Promise<void> => {
     addAdressIfNotEmpty(addressShipping);
     addAdressIfNotEmpty(addressBilling);
 
     addDefaultAddressHandler();
 
-    handleUserRegistration(customerData).then(() => {
+    const response = (await handleUserRegistration(customerData)) as IAxiosResponse;
+    const isRegistrationSuccess = 'customer' in response;
+
+    if (!isRegistrationSuccess) {
+        const errorMessage: string = response.response.data.message;
+        Notify.create({
+            message: errorMessage,
+            icon: 'warning_amber',
+        });
+    } else {
         const { password, email } = customerData;
-        handleUserAuthorization(password, email);
 
-        const userStore = useUserStore();
-        userStore.setIsAuthenticated(true);
-
-        setTimeout(() => {
-            router.push('/');
-        }, 1500);
-    });
+        await loginHandler({ password, email }, router);
+    }
 };
 
 watch(selectedCountryShipping, () => {
