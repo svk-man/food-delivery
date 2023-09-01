@@ -227,7 +227,11 @@ const submit = async (): Promise<void> => {
     const isRegistrationSuccess = 'customer' in response;
 
     if (!isRegistrationSuccess) {
-        const errorMessage: string = response.response.data.message;
+        let errorMessage: string = response.response.data.message;
+
+        if (errorMessage === 'There is already an existing customer with the provided email.') {
+            errorMessage = `${customerData.email} - уже зарегистрирован 🍰, Войдите или Поменяйте почту~`;
+        }
         Notify.create({
             message: errorMessage,
             icon: 'warning_amber',
