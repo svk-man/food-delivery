@@ -1,8 +1,10 @@
 <template>
-    <q-form @submit="loginHandlerFunc" class="signin-form">
+    <q-form @submit="loginHandlerFunc" class="signin-form" ref="form">
         <h2 class="signin-form__title q-ma-none q-mb-md">Авторизация</h2>
-        <input-email @update:email="(email: string) => (userEmail = email)" />
+        <input-email for="email" @update:email="(email: string) => (userEmail = email)" ref="inputEmail" />
         <q-input
+            ref="password"
+            for="password"
             label="Пароль*"
             :type="isPassword ? 'password' : 'text'"
             outlined
