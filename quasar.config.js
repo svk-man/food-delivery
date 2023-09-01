@@ -11,6 +11,7 @@
 /* eslint func-names: 0 */
 /* eslint global-require: 0 */
 
+const { Notify } = require('quasar');
 const { configure } = require('quasar/wrappers');
 
 module.exports = configure((/* ctx */) => ({
@@ -100,7 +101,7 @@ module.exports = configure((/* ctx */) => ({
         // directives: [],
 
         // Quasar plugins
-        plugins: [],
+        plugins: ['Notify'],
     },
 
     // animations: 'all', // --- includes all animations

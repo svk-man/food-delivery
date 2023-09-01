@@ -6,18 +6,17 @@
 
 <script lang="ts" setup>
 import { defineComponent, ref, onMounted } from 'vue';
-import { fetchAccessToken, fetchProducts, Product } from '../../shared/api/auth';
+import { manageToken } from '../../shared/api/auth';
+import { fetchProducts, Product } from '../../shared/api/products';
 
 const products = ref<Product[]>([]);
 
 const getProducts = async (): Promise<void> => {
     const key: string = import.meta.env.VITE_SPA_PROJECT_KEY;
-    const id: string = import.meta.env.VITE_SPA_CLIENT_ID;
-    const secret: string = import.meta.env.VITE_SPA_CLIENT_SECRET;
-    const scope: string = import.meta.env.VITE_SPA_SCOPE;
-    const token = `${await fetchAccessToken(id, secret, scope)}`;
-    const fetchedProducts = await fetchProducts(key, token);
 
+    const token = await manageToken();
+
+    const fetchedProducts = await fetchProducts(key, token);
     if (fetchedProducts) products.value = fetchedProducts;
 };
 
