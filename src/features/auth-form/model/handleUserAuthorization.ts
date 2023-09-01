@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { Notify } from 'quasar';
+import { useUserStore } from 'src/app/store/user';
 import { saveTokenToCookies } from 'src/shared/api/auth';
+import { redirectTo } from 'src/shared/api/redirect';
+import { Router } from 'vue-router';
 import { Customer } from '../../registration-form/lib/types';
 
 export interface MyCustomerSignin {
@@ -11,7 +14,7 @@ export interface CustomerSignInResult {
     customer: Customer;
 }
 
-export interface PasswordFlowReturned {
+export interface PasswordFlowData {
     access_token: string;
     expires_in: string;
     refresh_token: string;
@@ -33,13 +36,13 @@ export interface PasswordFlowError {
 export async function fetchTokenWithPasswordFlow(
     password: string,
     email: string
-): Promise<PasswordFlowReturned | null> {
+): Promise<PasswordFlowData | PasswordFlowError> {
     const id: string = import.meta.env.VITE_SPA_CLIENT_ID;
     const secret: string = import.meta.env.VITE_SPA_CLIENT_SECRET;
     const scope: string = import.meta.env.VITE_SPA_SCOPE;
 
     try {
-        const response: AxiosResponse<PasswordFlowReturned> = await axios({
+        const response: AxiosResponse<PasswordFlowData> = await axios({
             url: 'https://auth.us-central1.gcp.commercetools.com/oauth/carrot78/customers/token',
             method: 'post',
             headers: {
@@ -65,32 +68,51 @@ export async function fetchTokenWithPasswordFlow(
         }
 
         Notify.create({ message, icon: 'warning_amber' });
-        return null;
+        return PasswordFlowErr;
     }
 }
 
-export default async function handleUserAuthorization(password: string, email: string): Promise<void | null> {
-    const data: MyCustomerSignin = { email, password };
+export interface LoginOption {
+    email: string;
+    password: string;
+    access_token?: string;
+}
 
-    const tokenWithExpireTime = await fetchTokenWithPasswordFlow(password, email);
-    if (!tokenWithExpireTime) return null;
-
-    saveTokenToCookies(tokenWithExpireTime.access_token);
-
+export default async function login(option: LoginOption): Promise<void> {
     try {
-        const response: AxiosResponse<undefined | null> = await axios({
+        await axios({
             url: 'https://api.us-central1.gcp.commercetools.com/carrot78/me/login',
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${tokenWithExpireTime.access_token}`,
+                Authorization: `Bearer ${option.access_token}`,
             },
-            data: JSON.stringify(data),
+            data: JSON.stringify({ email: option.email, password: option.password }),
         });
         Notify.create('Успешный вход! meow~ 🐈🐈');
-
-        return Promise.resolve();
     } catch (error) {
-        return null;
+        Notify.create('Произошла серверная ошибка, пожалуйста, попробуйте ещё раз через несколько минут!');
+    }
+}
+
+export async function loginHandler(option: LoginOption, router: Router): Promise<void> {
+    const userToken = await fetchTokenWithPasswordFlow(option.password, option.email);
+    const isUserTokenExist = 'access_token' in userToken;
+
+    if (isUserTokenExist) {
+        saveTokenToCookies(userToken.access_token);
+
+        const loginOption = {
+            email: option.email,
+            password: option.password,
+            access_token: userToken.access_token,
+        };
+
+        await login(loginOption);
+
+        const userStore = useUserStore();
+        userStore.setIsAuthenticated(true);
+
+        await redirectTo('/', router);
     }
 }
