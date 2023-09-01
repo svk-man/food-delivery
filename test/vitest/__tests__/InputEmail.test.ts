@@ -1,6 +1,6 @@
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { mount } from '@vue/test-utils';
-import { describe, it, vi, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
 
 installQuasarPlugin();
