@@ -1,6 +1,6 @@
 <template>
     <q-card :class="styles.card" flat bordered>
-        <q-img :src="imageSrc" :alt="title" />
+        <q-img :src="imageSrc" :alt="title" height="350px" fit="fill" />
 
         <q-card-section>
             <h3 class="text-h5 q-mt-sm q-mb-xs">{{ title }}</h3>

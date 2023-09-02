@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md row items-start q-gutter-md">
+    <div class="q-pa-md row items-start justify-around q-gutter-xl">
         <ProductCard
             v-for="product in products"
             :key="product.id"
@@ -28,8 +28,12 @@ const getProducts = async (): Promise<void> => {
     const token = await manageToken();
 
     const fetchedProducts = await fetchProducts(key, token);
-    if (fetchedProducts) products.value = fetchedProducts;
-    console.log(fetchedProducts);
+    if (fetchedProducts) {
+        const publishedFetchedProducts = fetchedProducts.filter(
+            (fetchedProduct: Product) => fetchedProduct.masterData.published
+        );
+        products.value = publishedFetchedProducts;
+    }
 };
 
 onMounted(getProducts);

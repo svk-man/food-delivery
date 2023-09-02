@@ -28,6 +28,7 @@ export interface Product {
                 images: MasterVariantImage[];
             };
         };
+        published: boolean;
     };
     key: string;
     priceMode: string;
