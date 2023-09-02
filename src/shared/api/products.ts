@@ -1,5 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 
+interface MasterVariantImage {
+    url: string;
+    label: string;
+}
+
 export interface Product {
     results: [];
     id: string;
@@ -15,6 +20,12 @@ export interface Product {
         current: {
             name: {
                 ru: string;
+            };
+            description: {
+                ru: string;
+            };
+            masterVariant: {
+                images: MasterVariantImage[];
             };
         };
     };
