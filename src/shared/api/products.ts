@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 /* https://docs.commercetools.com/api/types#currencycode */
-enum CurrencyCode {
+export enum CurrencyCode {
     'RUB',
 }
 
@@ -38,7 +38,7 @@ interface ProductVariant {
 
 /* https://docs.commercetools.com/api/types#localizedstring */
 interface LocalizedString {
-    [key: string]: number;
+    [key: string]: string;
 }
 
 /* https://docs.commercetools.com/api/projects/products#productdata */
@@ -58,6 +58,16 @@ interface ProductCatalogData {
 export interface Product {
     id: string;
     masterData: ProductCatalogData;
+}
+
+export interface SimplifiedProduct {
+    id: string;
+    title: string;
+    description: string;
+    imageSrc: string;
+    currencyCode: CurrencyCode;
+    price: string;
+    discountedPrice?: string;
 }
 
 export async function fetchProducts(key: string, token: string): Promise<Product[] | null> {
