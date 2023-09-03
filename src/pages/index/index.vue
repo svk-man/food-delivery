@@ -24,7 +24,16 @@
                     flat
                 />
                 <q-btn
-                    v-else
+                    v-if="isUserAuthenticated"
+                    to="/profile"
+                    label="Профиль"
+                    class="header__buttons-item"
+                    rounded
+                    text-color="black"
+                    flat
+                />
+                <q-btn
+                    v-if="isUserAuthenticated"
                     @click="logout"
                     label="Выйти"
                     class="header__buttons-item"

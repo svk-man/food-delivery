@@ -49,8 +49,17 @@
                             text-color="white"
                         />
                         <q-btn
-                            v-else
-                            @click="logout"
+                            v-if="isUserAuthenticated"
+                            to="/profile"
+                            label="Профиль"
+                            class="header__buttons-item"
+                            rounded
+                            text-color="black"
+                            flat
+                        />
+                        <q-btn
+                            v-if="isUserAuthenticated"
+                            to="/profile"
                             label="Выйти"
                             icon-right="logout"
                             class="header__buttons-item header__buttons-item_auth"
@@ -119,6 +128,7 @@ watch(isUserAuthenticated, (value) => {
         : [
               { to: '/catalog', label: 'Каталог' },
               { to: '/cart', label: 'Корзина' },
+              { to: '/profile', label: 'Профиль' },
           ];
 });
 
