@@ -19,7 +19,7 @@ function getSimplifiedProduct(fetchedProduct: Product): SimplifiedProduct {
         : '';
     const imageSrc = fetchedProduct.masterData.current.masterVariant.images[0]
         ? fetchedProduct.masterData.current.masterVariant.images[0].url
-        : 'https://dummyimage.com/600x400/fff/000&text=%D0%9D%D0%95+%D0%9D%D0%90%D0%99%D0%94%D0%95%D0%9D%D0%9E';
+        : 'image-not-found.png';
     const currencyCode = fetchedProduct.masterData.current.masterVariant.prices[0]
         ? fetchedProduct.masterData.current.masterVariant.prices[0].value.currencyCode
         : CurrencyCode.RUB;
