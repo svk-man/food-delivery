@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md row items-start justify-around q-gutter-xl">
+    <div class="q-pa-md fit row justify-around items-stretch q-gutter-xl">
         <ProductCard
             v-for="product in products"
             :key="product.id"
