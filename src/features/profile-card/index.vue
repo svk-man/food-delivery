@@ -129,7 +129,6 @@ const userData = ref({
     firstName: '',
     lastName: '',
     dateOfBirth: '',
-    // addresses: [],
     defaultShippingAddressId: '',
     defaultBillingAddressId: '',
     isEmailVerified: false,
@@ -189,7 +188,6 @@ async function customerHendler(): Promise<void> {
         firstName,
         lastName,
         dateOfBirth: `${dateOfBirth}`,
-        // addresses,
         defaultShippingAddressId,
         defaultBillingAddressId,
         isEmailVerified,
@@ -217,17 +215,7 @@ async function handleBlur(userAction: string, field: string): Promise<void> {
     await setCustomerData(userToken, data);
 }
 
-// async function saveChanges(): Promise<void> {
-//     const result = {...userData.value}
-//     console.log(result)
-//     isEditMode.value = false;
-// }
-
 onMounted(customerHendler);
-
-// async function updateUserData():void {
-
-// }
 
 defineComponent({
     name: 'ProfileCard',
