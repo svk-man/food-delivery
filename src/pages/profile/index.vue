@@ -1,7 +1,6 @@
 <template>
     <q-page>
         <div class="container">
-            <span>Профиль</span>
             <profile-card />
         </div>
     </q-page>

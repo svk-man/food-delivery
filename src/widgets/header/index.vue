@@ -59,7 +59,8 @@
                         />
                         <q-btn
                             v-if="isUserAuthenticated"
-                            to="/profile"
+                            to="/signin"
+                            @click="logout"
                             label="Выйти"
                             icon-right="logout"
                             class="header__buttons-item header__buttons-item_auth"
