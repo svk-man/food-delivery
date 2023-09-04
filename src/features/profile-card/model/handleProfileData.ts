@@ -51,3 +51,31 @@ export default async function getCustomerData(accessToken: string): Promise<Cust
         throw new Error('Ошибка получения данных юзера');
     }
 }
+
+interface Action {
+    action: string;
+    [key: string]: string;
+}
+interface SetCustomerData {
+    version: number;
+    actions: Action[];
+}
+
+export async function setCustomerData(accessToken: string, data: SetCustomerData): Promise<CustomerData> {
+    try {
+        const response = await axios({
+            url: 'https://api.us-central1.gcp.commercetools.com/carrot78/me',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
+            },
+            data: JSON.stringify(data),
+        });
+        Notify.create('данные юзера - обновлены! ура!');
+        return response.data;
+    } catch (error) {
+        Notify.create('Ошибка при обновлении данных юзера, попробуй ещё раз!');
+        throw new Error('Ошибка обновления данных юзера');
+    }
+}

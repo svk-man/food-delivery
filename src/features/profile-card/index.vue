@@ -9,24 +9,31 @@
                             v-model="userData.firstName"
                             :editable="isEditMode"
                             standout="bg-orange text-white"
+                            @blur="handleBlur('setFirstName', 'firstName')"
                         />
                         <q-input
                             label="Фамилия"
                             v-model="userData.lastName"
                             :editable="isEditMode"
                             standout="bg-orange text-white"
+                            @blur="handleBlur('setLastName', 'lastName')"
                         />
                         <q-input
                             label="Почта"
                             v-model="userData.email"
                             :editable="isEditMode"
                             standout="bg-orange text-white"
+                            @blur="handleBlur('changeEmail', 'email')"
                         />
                         <q-input
                             label="Дата рождения"
                             v-model="userData.dateOfBirth"
                             :editable="isEditMode"
                             standout="bg-orange text-white"
+                            placeholder="гггг/мм/дд"
+                            mask="date"
+                            :rules="[isValidDate, (val, rules) => rules.date(val) || 'Некорректная дата']"
+                            @blur="handleBlur('setDateOfBirth', 'dateOfBirth')"
                         />
                     </q-card-section>
                 </q-card>
@@ -42,6 +49,7 @@
                                 v-model="shippingAddress.city"
                                 :editable="isEditMode"
                                 standout="bg-orange text-white"
+                                @blur="handleBlur('changeEmail', 'email')"
                             />
                             <q-input
                                 label="Улица"
@@ -86,15 +94,14 @@
                 </q-card>
             </div>
         </div>
-
-        <q-btn label="Сохранить" @click="saveChanges" />
     </q-form>
 </template>
 
 <script setup lang="ts">
 import { Cookies } from 'quasar';
 import { defineComponent, onMounted, ref } from 'vue';
-import getCustomerData from './model/handleProfileData';
+import { isValidDate } from '../registration-form/lib/isValidDate';
+import getCustomerData, { setCustomerData } from './model/handleProfileData';
 
 interface AddressType {
     city: string;
@@ -126,6 +133,7 @@ const userData = ref({
     defaultShippingAddressId: '',
     defaultBillingAddressId: '',
     isEmailVerified: false,
+    version: '',
 });
 
 const shippingAddress = ref({
@@ -163,6 +171,7 @@ async function customerHendler(): Promise<void> {
         defaultShippingAddressId,
         defaultBillingAddressId,
         isEmailVerified,
+        version,
         ...rest
     } = response;
 
@@ -184,14 +193,35 @@ async function customerHendler(): Promise<void> {
         defaultShippingAddressId,
         defaultBillingAddressId,
         isEmailVerified,
+        version: `${version}`,
     };
 
     userData.value = filteredData;
 }
 
-async function saveChanges(): Promise<void> {
-    isEditMode.value = false;
+async function handleBlur(userAction: string, field: string): Promise<void> {
+    const result = { ...userData.value };
+
+    const value = userAction === 'setDateOfBirth' ? result[field].replaceAll('/', '-') : result[field];
+
+    const action = {
+        action: userAction,
+        [field]: value,
+    };
+    const data = {
+        version: +result.version,
+        actions: [action],
+    };
+
+    const userToken: string = Cookies.get('auth_token');
+    await setCustomerData(userToken, data);
 }
+
+// async function saveChanges(): Promise<void> {
+//     const result = {...userData.value}
+//     console.log(result)
+//     isEditMode.value = false;
+// }
 
 onMounted(customerHendler);
 
