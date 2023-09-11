@@ -1,107 +1,69 @@
 <template>
     <q-form class="wrapper">
-        <div class="info">
-            <div class="info__main">
-                <q-card outlined>
-                    <q-card-section>
-                        <q-input
-                            label="Имя"
-                            v-model="userData.firstName"
-                            :editable="isEditMode"
-                            standout="bg-orange text-white"
-                            @blur="handleBlur('setFirstName', 'firstName')"
-                        />
-                        <q-input
-                            label="Фамилия"
-                            v-model="userData.lastName"
-                            :editable="isEditMode"
-                            standout="bg-orange text-white"
-                            @blur="handleBlur('setLastName', 'lastName')"
-                        />
-                        <q-input
-                            label="Почта"
-                            v-model="userData.email"
-                            :editable="isEditMode"
-                            standout="bg-orange text-white"
-                            @blur="handleBlur('changeEmail', 'email')"
-                        />
-                        <q-input
-                            label="Дата рождения"
-                            v-model="userData.dateOfBirth"
-                            :editable="isEditMode"
-                            standout="bg-orange text-white"
-                            placeholder="гггг/мм/дд"
-                            mask="date"
-                            :rules="[isValidDate, (val, rules) => rules.date(val) || 'Некорректная дата']"
-                            @blur="handleBlur('setDateOfBirth', 'dateOfBirth')"
-                        />
-                    </q-card-section>
-                </q-card>
-            </div>
+        <q-tabs
+            v-model="tab"
+            inline-label
+            switch-indicator
+            indicator-color="primary"
+            class="bg-orange-5 text-white shadow-1"
+        >
+            <q-tab name="mainInfo" icon="person" label="Профиль" />
+            <q-tab name="shipping" icon="local_shipping" label="Доставка" />
+            <q-tab name="billing" icon="payment" label="Оплата" />
+        </q-tabs>
 
-            <div class="info__addresses">
-                <q-card outlined>
-                    <q-card-section>
-                        <div class="shipping__title">Адрес доставки</div>
-                        <div class="shipping__content">
-                            <q-input
-                                label="Город"
-                                v-model="shippingAddress.city"
-                                :editable="isEditMode"
-                                standout="bg-orange text-white"
-                                @blur="handleBlur('changeEmail', 'email')"
-                            />
-                            <q-input
-                                label="Улица"
-                                v-model="shippingAddress.streetName"
-                                :editable="isEditMode"
-                                standout="bg-orange text-white"
-                            />
-                            <q-input
-                                label="Почтовый индекс"
-                                v-model="shippingAddress.postalCode"
-                                :editable="isEditMode"
-                                standout="bg-orange text-white"
-                            />
-                        </div>
-                    </q-card-section>
-                </q-card>
-
-                <q-card outlined>
-                    <q-card-section>
-                        <div class="billing__title">Адрес для выставления счёта</div>
-                        <div class="shipping__content">
-                            <q-input
-                                label="Город"
-                                v-model="billingAddress.city"
-                                :editable="isEditMode"
-                                standout="bg-orange text-white"
-                            />
-                            <q-input
-                                label="Улица"
-                                v-model="billingAddress.streetName"
-                                :editable="isEditMode"
-                                standout="bg-orange text-white"
-                            />
-                            <q-input
-                                label="Почтовый индекс"
-                                v-model="billingAddress.postalCode"
-                                :editable="isEditMode"
-                                standout="bg-orange text-white"
-                            />
-                        </div>
-                    </q-card-section>
-                </q-card>
-            </div>
-        </div>
+        <q-tab-panels v-model="tab" animated>
+            <q-tab-panel name="mainInfo">
+                <input-name v-model="userData.firstName" @blur="sendDataToBackend('setFirstName', 'firstName')" />
+                <input-surname v-model="userData.lastName" @blur="sendDataToBackend('setLastName', 'lastName')" />
+                <input-email v-model="userData.email" @blur="sendDataToBackend('changeEmail', 'email')" />
+                <input-birth-date
+                    v-model="userData.dateOfBirth"
+                    @blur="sendDataToBackend('setDateOfBirth', 'dateOfBirth')"
+                />
+            </q-tab-panel>
+            <q-tab-panel name="shipping">
+                <input-city v-model="shippingAddress.city" @blur="sendDataToBackend('changeEmail', 'email')" />
+                <input-street v-model="shippingAddress.streetName" />
+                <q-input
+                    v-model="shippingAddress.postalCode"
+                    label="Индекс *"
+                    outlined
+                    stack-label
+                    color="accent"
+                    reactive-rules
+                />
+            </q-tab-panel>
+            <q-tab-panel name="billing">
+                <input-city v-model="billingAddress.city" @blur="sendDataToBackend('changeEmail', 'email')" />
+                <input-street v-model="billingAddress.streetName" />
+                <q-input
+                    v-model="billingAddress.postalCode"
+                    label="Индекс *"
+                    outlined
+                    stack-label
+                    color="accent"
+                    reactive-rules
+                />
+            </q-tab-panel>
+        </q-tab-panels>
     </q-form>
 </template>
 
 <script setup lang="ts">
 import { Cookies } from 'quasar';
 import { defineComponent, onMounted, ref } from 'vue';
-import { isValidDate } from '../registration-form/lib/isValidDate';
+import InputName from 'src/features/registration-form/ui/inputName.vue';
+import InputSurname from 'src/features/registration-form/ui/inputSurname.vue';
+import InputEmail from 'src/shared/ui/inputEmail.vue';
+import InputBirthDate from 'src/features/registration-form/ui/inputBirthDate.vue';
+import InputCity from 'src/features/registration-form/ui/inputCity.vue';
+import InputStreet from 'src/features/registration-form/ui/inputStreet.vue';
+
 import getCustomerData, { setCustomerData } from './model/handleProfileData';
+
+const tab = ref('mainInfo');
+const hasFocus = ref(false);
 
 interface AddressType {
     city: string;
@@ -156,7 +118,6 @@ const billingAddress = ref({
     streetName: '',
 });
 
-const isEditMode = ref(false);
 const token: string = Cookies.get('auth_token');
 
 async function customerHendler(): Promise<void> {
@@ -197,7 +158,8 @@ async function customerHendler(): Promise<void> {
     userData.value = filteredData;
 }
 
-async function handleBlur(userAction: string, field: string): Promise<void> {
+async function sendDataToBackend(userAction: string, field: string): Promise<void> {
+    hasFocus.value = false;
     const result = { ...userData.value };
 
     const value = userAction === 'setDateOfBirth' ? result[field].replaceAll('/', '-') : result[field];

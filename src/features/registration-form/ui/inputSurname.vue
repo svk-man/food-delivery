@@ -1,13 +1,13 @@
 <template>
     <q-input
-        :label="firstNameLabel ? firstNameLabel : 'Имя *'"
+        :label="lastNameLabel ? lastNameLabel : 'Фамилия *'"
         :clearable="false"
         outlined
         stack-label
         color="accent"
         reactive-rules
-        v-model="userFirstName"
-        @update:model-value="updateFirstName"
+        v-model="userLastName"
+        @update:model-value="updateLastName"
         :rules="[isValidName]"
         class="signup-form__input text-body1"
     />
@@ -17,19 +17,19 @@
 import { ref, defineComponent } from 'vue';
 import { isValidName } from '../lib/isValidName';
 
-const userFirstName = ref('');
+const userLastName = ref('');
 
-const emit = defineEmits(['update:first-name']);
+const emit = defineEmits(['update:last-name']);
 
-const updateFirstName = (value: string | number | null): void => {
-    if (value && typeof value === 'string') emit('update:first-name', value);
+const updateLastName = (value: string | number | null): void => {
+    if (value && typeof value === 'string') emit('update:last-name', value);
 };
 
 defineComponent({
     name: 'InputName',
 });
 defineProps({
-    firstNameLabel: String,
+    lastNameLabel: String,
 });
 </script>
 

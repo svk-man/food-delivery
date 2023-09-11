@@ -2,9 +2,9 @@
     <q-input
         ref="email"
         for="email"
-        label="Email*"
+        label="E-mail *"
         outlined
-        clearable
+        :clearable="false"
         stack-label
         color="accent"
         reactive-rules
