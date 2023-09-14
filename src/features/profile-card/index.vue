@@ -14,16 +14,13 @@
 
         <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="mainInfo">
-                <input-name v-model="userData.firstName" @blur="sendDataToBackend('setFirstName', 'firstName')" />
-                <input-surname v-model="userData.lastName" @blur="sendDataToBackend('setLastName', 'lastName')" />
-                <input-email v-model="userData.email" @blur="sendDataToBackend('changeEmail', 'email')" />
-                <input-birth-date
-                    v-model="userData.dateOfBirth"
-                    @blur="sendDataToBackend('setDateOfBirth', 'dateOfBirth')"
-                />
+                <input-name v-model="userData.firstName" @blur="sendData('setFirstName', 'firstName')" />
+                <input-surname v-model="userData.lastName" @blur="sendData('setLastName', 'lastName')" />
+                <input-email v-model="userData.email" @blur="sendData('changeEmail', 'email')" />
+                <input-birth-date v-model="userData.dateOfBirth" @blur="sendData('setDateOfBirth', 'dateOfBirth')" />
             </q-tab-panel>
             <q-tab-panel name="shipping">
-                <input-city v-model="shippingAddress.city" @blur="sendDataToBackend('changeEmail', 'email')" />
+                <input-city v-model="shippingAddress.city" @blur="sendData('changeEmail', 'email')" />
                 <input-street v-model="shippingAddress.streetName" />
                 <q-input
                     v-model="shippingAddress.postalCode"
@@ -35,7 +32,7 @@
                 />
             </q-tab-panel>
             <q-tab-panel name="billing">
-                <input-city v-model="billingAddress.city" @blur="sendDataToBackend('changeEmail', 'email')" />
+                <input-city v-model="billingAddress.city" @blur="sendData('changeEmail', 'email')" />
                 <input-street v-model="billingAddress.streetName" />
                 <q-input
                     v-model="billingAddress.postalCode"
@@ -63,7 +60,6 @@ import InputStreet from 'src/features/registration-form/ui/inputStreet.vue';
 import getCustomerData, { setCustomerData } from './model/handleProfileData';
 
 const tab = ref('mainInfo');
-const hasFocus = ref(false);
 
 interface AddressType {
     city: string;
@@ -85,15 +81,40 @@ const defaultAddress: AddressType = {
     postalCode: '',
     streetName: '',
 };
-
-const userData = ref({
+interface PrevUserData {
+    email: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    defaultShippingAddressId: string;
+    defaultBillingAddressId: string;
+    version: string;
+}
+const prevUserData: PrevUserData = {
     email: '',
     firstName: '',
     lastName: '',
     dateOfBirth: '',
     defaultShippingAddressId: '',
     defaultBillingAddressId: '',
-    isEmailVerified: false,
+    version: '',
+};
+interface UserData {
+    email: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    defaultShippingAddressId: string;
+    defaultBillingAddressId: string;
+    version: string;
+}
+const userData = ref<UserData>({
+    email: '',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    defaultShippingAddressId: '',
+    defaultBillingAddressId: '',
     version: '',
 });
 
@@ -130,7 +151,6 @@ async function customerHendler(): Promise<void> {
         addresses,
         defaultShippingAddressId,
         defaultBillingAddressId,
-        isEmailVerified,
         version,
         ...rest
     } = response;
@@ -148,28 +168,40 @@ async function customerHendler(): Promise<void> {
         email,
         firstName,
         lastName,
-        dateOfBirth: `${dateOfBirth}`,
+        dateOfBirth: `${dateOfBirth}`.replaceAll('-', '/'),
         defaultShippingAddressId,
         defaultBillingAddressId,
-        isEmailVerified,
         version: `${version}`,
     };
 
     userData.value = filteredData;
+    Object.assign(prevUserData, { ...filteredData });
 }
 
-async function sendDataToBackend(userAction: string, field: string): Promise<void> {
-    hasFocus.value = false;
-    const result = { ...userData.value };
+async function sendData(userAction: string, field: keyof PrevUserData): Promise<void> {
+    const result: UserData = { ...userData.value };
 
-    const value = userAction === 'setDateOfBirth' ? result[field].replaceAll('/', '-') : result[field];
+    const value: string = userAction === 'setDateOfBirth' ? result[field].replaceAll('/', '-') : result[field];
+
+    if (prevUserData[field] === result[field]) return;
+
+    if (result[field] !== undefined) {
+        prevUserData[field] = result[field];
+    }
 
     const action = {
         action: userAction,
         [field]: value,
     };
+
+    let version = 1;
+
+    if (!Number.isNaN(result?.version)) {
+        version = +result.version;
+    }
+
     const data = {
-        version: +result.version,
+        version,
         actions: [action],
     };
 

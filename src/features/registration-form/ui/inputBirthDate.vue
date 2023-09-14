@@ -42,5 +42,3 @@ defineComponent({
     name: 'InputBirthDate',
 });
 </script>
-
-<style lang="scss" scoped></style>

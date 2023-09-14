@@ -84,10 +84,8 @@
 import { Ref, defineComponent, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
-import { useUserStore } from 'src/app/store/user';
 import { Notify } from 'quasar';
 import { IAxiosResponse } from 'src/shared/api/interfaces';
-import { redirectTo } from 'src/shared/api/redirect';
 import InputPassword from './ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
 import { Address, Country, Customer } from './lib/types';
@@ -99,7 +97,7 @@ import InputPostalCode from './ui/inputPostalCode.vue';
 import InputCity from './ui/inputCity.vue';
 import InputStreet from './ui/inputStreet.vue';
 import handleUserRegistration from './model/handleUserRegistration';
-import login, { loginHandler } from '../auth-form/model/handleUserAuthorization';
+import { loginHandler } from '../auth-form/model/handleUserAuthorization';
 
 const router = useRouter();
 
