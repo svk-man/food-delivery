@@ -23,7 +23,14 @@
         <q-space></q-space>
 
         <q-card-actions class="q-mt-auto vertical-bottom">
-            <q-btn label="Добавить в корзину" class="button full-width" rounded color="orange-5" text-color="white" />
+            <q-btn
+                label="Добавить в корзину"
+                class="button full-width"
+                rounded
+                color="orange-5"
+                text-color="white"
+                :disable="!isAvailableProduct"
+            />
         </q-card-actions>
     </q-card>
 </template>
@@ -48,6 +55,8 @@ const truncedDescription = computed(() => {
 
     return `${description.split(' ').slice(0, DESCRIPTION_MAX_WORDS_COUNT).join(' ')}...`;
 });
+
+const isAvailableProduct = computed(() => Number(props.product.discountedPrice) > 0 || Number(props.product.price) > 0);
 
 defineComponent({
     name: 'ProductCard',
