@@ -19,6 +19,12 @@
             <h3 class="text-h5 q-mt-none q-mb-xs">{{ product.title }}</h3>
             <p class="text-caption text-grey">{{ truncedDescription }}</p>
         </q-card-section>
+
+        <q-space></q-space>
+
+        <q-card-actions class="q-mt-auto vertical-bottom">
+            <q-btn label="Добавить в корзину" class="button full-width" rounded color="orange-5" text-color="white" />
+        </q-card-actions>
     </q-card>
 </template>
 

@@ -12,22 +12,8 @@
                 </q-toolbar-title>
                 <div class="header__buttons font-inter-500">
                     <div class="gt-sm">
-                        <q-btn
-                            to="/catalog"
-                            label="Каталог"
-                            class="header__buttons-item"
-                            rounded
-                            text-color="black"
-                            flat
-                        />
-                        <q-btn
-                            to="/cart"
-                            label="Корзина"
-                            class="header__buttons-item"
-                            rounded
-                            text-color="black"
-                            flat
-                        />
+                        <q-btn to="/catalog" label="Каталог" class="button" rounded text-color="black" flat />
+                        <q-btn to="/cart" label="Корзина" class="button" rounded text-color="black" flat />
                     </div>
                     <div class="header__buttons_auth gt-sm">
                         <q-btn
@@ -35,7 +21,7 @@
                             to="/register"
                             label="Регистрация"
                             icon="add"
-                            class="header__buttons-item header__buttons-item_auth"
+                            class="button"
                             color="orange-5"
                             text-color="white"
                         />
@@ -52,7 +38,7 @@
                             v-if="isUserAuthenticated"
                             to="/profile"
                             label="Профиль"
-                            class="header__buttons-item"
+                            class="button"
                             rounded
                             text-color="black"
                             flat
@@ -63,7 +49,7 @@
                             @click="logout"
                             label="Выйти"
                             icon-right="logout"
-                            class="header__buttons-item header__buttons-item_auth"
+                            class="button"
                             color="orange-5"
                             text-color="white"
                         />
@@ -155,14 +141,6 @@ defineComponent({
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        &-item {
-            text-transform: capitalize;
-            &_auth {
-                border-radius: 12px;
-                font-weight: 500;
-                letter-spacing: 0.2px;
-            }
-        }
         &_auth {
             display: flex;
             gap: 12px;
