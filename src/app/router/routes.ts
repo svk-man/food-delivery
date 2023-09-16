@@ -7,6 +7,7 @@ export const ROUTES_NAMES = {
     CART: 'cart',
     CATALOG: 'catalog',
     PROFILE: 'profile',
+    PRODUCT: 'product',
     NOT_FOUND: 'not-found',
 } as const;
 
@@ -41,6 +42,11 @@ const routes: RouteRecordRaw[] = [
         name: ROUTES_NAMES.PROFILE,
         path: '/profile',
         component: () => import('../../pages/profile'),
+    },
+    {
+        name: ROUTES_NAMES.PRODUCT,
+        path: '/catalog/:id',
+        component: () => import('../../pages/product'),
     },
 
     // Always leave this as last one,
