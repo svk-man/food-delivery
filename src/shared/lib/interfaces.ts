@@ -3,4 +3,5 @@ export interface TeamMember {
     imageSrc: string;
     role: string;
     biography: string;
+    results: string[];
 }
