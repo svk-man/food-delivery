@@ -1,7 +1,8 @@
 <template>
     <q-form @submit.prevent="submit" class="signup-form">
         <h4 class="signup-form__title q-ma-none q-mb-md">Регистрация</h4>
-        <input-name @update:first-name="handleFirstNameUpdate" @update:last-name="handleLastNameUpdate" />
+        <input-name @update:first-name="handleFirstNameUpdate" />
+        <input-surname @update:last-name="handleLastNameUpdate" />
         <input-email @update:email="handleEmailUpdate" class="signup-form__input" />
         <input-birth-date @update:date="handleDateUpdate" />
         <div class="addresses">
@@ -83,21 +84,20 @@
 import { Ref, defineComponent, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import InputEmail from 'src/shared/ui/inputEmail.vue';
-import { useUserStore } from 'src/app/store/user';
 import { Notify } from 'quasar';
 import { IAxiosResponse } from 'src/shared/api/interfaces';
-import { redirectTo } from 'src/shared/api/redirect';
 import InputPassword from './ui/inputPassword.vue';
 import { isValidPostalCode } from './lib/isValidPostalCode';
 import { Address, Country, Customer } from './lib/types';
 import InputName from './ui/inputName.vue';
+import InputSurname from './ui/inputSurname.vue';
 import InputBirthDate from './ui/inputBirthDate.vue';
 import SelectCountry from './ui/inputCountry.vue';
 import InputPostalCode from './ui/inputPostalCode.vue';
 import InputCity from './ui/inputCity.vue';
 import InputStreet from './ui/inputStreet.vue';
 import handleUserRegistration from './model/handleUserRegistration';
-import login, { loginHandler } from '../auth-form/model/handleUserAuthorization';
+import { loginHandler } from '../auth-form/model/handleUserAuthorization';
 
 const router = useRouter();
 

@@ -1,8 +1,7 @@
 <template>
     <q-input
-        label="Улица*"
+        label="Улица *"
         outlined
-        clearable
         stack-label
         color="accent"
         reactive-rules

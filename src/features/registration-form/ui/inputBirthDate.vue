@@ -1,8 +1,7 @@
 <template>
     <q-input
-        label="Дата рождения*"
+        label="Дата рождения *"
         outlined
-        clearable
         stack-label
         color="accent"
         reactive-rules
@@ -43,5 +42,3 @@ defineComponent({
     name: 'InputBirthDate',
 });
 </script>
-
-<style lang="scss" scoped></style>
