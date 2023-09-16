@@ -1,6 +1,11 @@
 <template>
-    <div class="q-pa-md row justify-around items-stretch q-gutter-xl">
-        <router-link v-for="product in products" :key="product.id" :to="`/catalog/${product.id}`">
+    <div class="products q-pa-md row justify-around items-stretch q-gutter-xl">
+        <router-link
+            class="products__item"
+            v-for="product in products"
+            :key="product.id"
+            :to="`/catalog/${product.id}`"
+        >
             <ProductCard :product="product" />
         </router-link>
     </div>
@@ -42,3 +47,12 @@ defineComponent({
     name: 'ProductList',
 });
 </script>
+
+<style lang="scss">
+.products {
+    &__item {
+        color: black;
+        text-decoration: none;
+    }
+}
+</style>

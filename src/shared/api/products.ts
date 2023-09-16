@@ -86,7 +86,7 @@ export function getSimplifiedProduct(fetchedProduct: Product): SimplifiedProduct
         : '';
     const imageSrc = fetchedProduct.masterData.current.masterVariant.images[0]
         ? fetchedProduct.masterData.current.masterVariant.images[0].url
-        : 'image-not-found.png';
+        : '/public/image-not-found.png';
     const currencyCode = fetchedProduct.masterData.current.masterVariant.prices[0]
         ? fetchedProduct.masterData.current.masterVariant.prices[0].value.currencyCode
         : CurrencyCode.RUB;
