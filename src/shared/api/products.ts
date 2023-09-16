@@ -70,6 +70,51 @@ export interface SimplifiedProduct {
     discountedPrice?: string;
 }
 
+export const defaultSimplifiedProduct: SimplifiedProduct = {
+    id: '',
+    title: '',
+    description: '',
+    imageSrc: '',
+    currencyCode: CurrencyCode.RUB,
+    price: '',
+};
+
+export function getSimplifiedProduct(fetchedProduct: Product): SimplifiedProduct {
+    const title = fetchedProduct.masterData.current.name.ru ? fetchedProduct.masterData.current.name.ru : '';
+    const description = fetchedProduct.masterData.current.description.ru
+        ? fetchedProduct.masterData.current.description.ru
+        : '';
+    const imageSrc = fetchedProduct.masterData.current.masterVariant.images[0]
+        ? fetchedProduct.masterData.current.masterVariant.images[0].url
+        : 'image-not-found.png';
+    const currencyCode = fetchedProduct.masterData.current.masterVariant.prices[0]
+        ? fetchedProduct.masterData.current.masterVariant.prices[0].value.currencyCode
+        : CurrencyCode.RUB;
+
+    let price = '';
+    if (fetchedProduct.masterData.current.masterVariant.prices[0]?.value) {
+        const { centAmount, fractionDigits } = fetchedProduct.masterData.current.masterVariant.prices[0].value;
+        price = `${centAmount / 10 ** fractionDigits}`;
+    }
+
+    let discountedPrice = '';
+    if (fetchedProduct.masterData.current.masterVariant.prices[0]?.discounted) {
+        const { centAmount, fractionDigits } =
+            fetchedProduct.masterData.current.masterVariant.prices[0].discounted.value;
+        discountedPrice = `${centAmount / 10 ** fractionDigits}`;
+    }
+
+    return {
+        id: fetchedProduct.id,
+        title,
+        description,
+        imageSrc,
+        currencyCode,
+        price,
+        discountedPrice,
+    };
+}
+
 export async function fetchProducts(key: string, token: string): Promise<Product[] | null> {
     try {
         const response: AxiosResponse<{ results: Product[] }> = await axios({
@@ -79,6 +124,21 @@ export async function fetchProducts(key: string, token: string): Promise<Product
         });
 
         return response.data.results;
+    } catch (error) {
+        return null;
+    }
+}
+
+/* https://docs.commercetools.com/api/projects/products#get-product-by-id */
+export async function fetchProduct(key: string, token: string, productId: string): Promise<Product | null> {
+    try {
+        const response: AxiosResponse<Product> = await axios({
+            url: `https://api.us-central1.gcp.commercetools.com/${key}/products/${productId}`,
+            method: 'get',
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        return response.data;
     } catch (error) {
         return null;
     }
