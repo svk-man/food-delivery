@@ -14,6 +14,7 @@
                     <div class="gt-sm">
                         <q-btn to="/catalog" label="Каталог" class="button" rounded text-color="black" flat />
                         <q-btn to="/cart" label="Корзина" class="button" rounded text-color="black" flat />
+                        <q-btn to="/about-us" label="О нас" class="button" rounded text-color="black" flat />
                     </div>
                     <div class="header__buttons_auth gt-sm">
                         <q-btn
